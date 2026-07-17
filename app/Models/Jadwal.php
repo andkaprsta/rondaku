@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Jadwal extends Model
+{
+    protected $table = 'jadwal';
+
+    protected $fillable = [
+        'tanggal',
+        'petugas_id'
+    ];
+
+    public function petugas()
+    {
+        return $this->belongsTo(User::class, 'petugas_id');
+    }
+
+    public function absensis()
+    {
+        return $this->hasMany(Absensi::class);
+    }
+}
