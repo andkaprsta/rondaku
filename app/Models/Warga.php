@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Warga extends Model
 {
     protected $table = 'warga';
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
     protected $fillable = [
         'nama',
         'alamat',

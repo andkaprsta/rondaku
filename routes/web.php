@@ -1,16 +1,34 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
 
+// Admin
 use App\Http\Controllers\Admin\WargaController;
 use App\Http\Controllers\Admin\JadwalController;
-use App\Http\Controllers\Petugas\AbsensiController;
+use App\Http\Controllers\Admin\AbsensiController as AdminAbsensiController;
+use App\Http\Controllers\Admin\UserController;
+
+// Petugas
+use App\Http\Controllers\Petugas\AbsensiController as PetugasAbsensiController;
+use App\Http\Controllers\Petugas\DashboardController;
+
+/*
+|--------------------------------------------------------------------------
+| Welcome
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Redirect Dashboard
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/dashboard', function () {
 
@@ -20,28 +38,67 @@ Route::get('/dashboard', function () {
         return redirect()->route('login');
     }
 
-    if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-
-    return redirect()->route('petugas.dashboard');
+    return $user->role === 'admin'
+        ? redirect()->route('admin.dashboard')
+        : redirect()->route('petugas.dashboard');
 })->middleware('auth')->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Profile
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('warga', WargaController::class);
-    Route::resource('jadwal', JadwalController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware('auth')->name('admin.dashboard');
+/*
+|--------------------------------------------------------------------------
+| Admin
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/petugas/dashboard', function () {
-    return view('petugas.dashboard');
-})->middleware('auth')->name('petugas.dashboard');
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    Route::resource('warga', WargaController::class);
+
+    Route::resource('jadwal', JadwalController::class);
+
+    Route::resource('user', UserController::class);
+
+    Route::get('/admin/absensi', [AdminAbsensiController::class, 'index'])
+        ->name('admin.absensi');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Petugas
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'petugas'])->group(function () {
+
+    Route::get('/petugas/dashboard', [DashboardController::class, 'index'])
+        ->name('petugas.dashboard');
+
+    Route::get('/absensi', [PetugasAbsensiController::class, 'index'])
+        ->name('absensi.index');
+
+    Route::post('/absensi', [PetugasAbsensiController::class, 'store'])
+        ->name('absensi.store');
+});
 
 require __DIR__ . '/auth.php';
