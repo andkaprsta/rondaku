@@ -9,9 +9,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
+        $keyword = $request->keyword;
+
+        $users = User::when($keyword, function ($query) use ($keyword) {
+
+            $query->where('name', 'like', "%{$keyword}%")
+                ->orWhere('email', 'like', "%{$keyword}%")
+                ->orWhere('role', 'like', "%{$keyword}%");
+        })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.user.index', compact('users'));
     }

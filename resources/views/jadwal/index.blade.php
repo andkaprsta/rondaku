@@ -1,3 +1,4 @@
+
 <x-app-layout>
 
     <x-slot name="header">
@@ -8,13 +9,13 @@
 
                 <h2 class="text-2xl font-bold text-gray-800">
 
-                    Data Jadwal Ronda
+                    Data Jadwal
 
                 </h2>
 
                 <p class="text-gray-500 mt-1">
 
-                    Kelola jadwal petugas ronda.
+                    Kelola jadwal ronda petugas.
 
                 </p>
 
@@ -45,6 +46,51 @@
 
             @endif
 
+            {{-- Search --}}
+            <div class="flex justify-end items-center gap-2 mb-5">
+
+                <form action="{{ route('jadwal.index') }}" method="GET">
+
+                    <div class="relative">
+
+                        <input
+                            type="text"
+                            name="keyword"
+                            value="{{ request('keyword') }}"
+                            placeholder="Cari petugas..."
+                            class="w-72 pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0a7 7 0 0114 0z" />
+
+                        </svg>
+
+                    </div>
+
+                </form>
+
+                @if(request('keyword'))
+
+                <a href="{{ route('jadwal.index') }}"
+                    class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg">
+
+                    Reset
+
+                </a>
+
+                @endif
+
+            </div>
+
             <div class="bg-white rounded-xl shadow-lg">
 
                 <div class="p-6 border-b">
@@ -61,7 +107,7 @@
 
                         <span class="font-bold text-blue-600">
 
-                            {{ count($jadwals) }}
+                            {{ $jadwals->total() }}
 
                         </span>
 
@@ -79,13 +125,29 @@
 
                             <tr>
 
-                                <th class="px-6 py-4 text-left">No</th>
+                                <th class="px-6 py-4 text-left">
 
-                                <th class="px-6 py-4 text-left">Tanggal</th>
+                                    No
 
-                                <th class="px-6 py-4 text-left">Petugas</th>
+                                </th>
 
-                                <th class="px-6 py-4 text-center">Aksi</th>
+                                <th class="px-6 py-4 text-left">
+
+                                    Tanggal
+
+                                </th>
+
+                                <th class="px-6 py-4 text-left">
+
+                                    Petugas
+
+                                </th>
+
+                                <th class="px-6 py-4 text-center">
+
+                                    Aksi
+
+                                </th>
 
                             </tr>
 
@@ -99,23 +161,19 @@
 
                                 <td class="px-6 py-4">
 
-                                    {{ $loop->iteration }}
+                                    {{ $jadwals->firstItem() + $loop->index }}
 
                                 </td>
 
                                 <td class="px-6 py-4">
 
-                                    {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d F Y') }}
+                                    {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 font-medium">
 
-                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-
-                                        {{ $jadwal->petugas->name }}
-
-                                    </span>
+                                    {{ $jadwal->petugas->name }}
 
                                 </td>
 
@@ -124,13 +182,14 @@
                                     <div class="flex justify-center gap-2">
 
                                         <a href="{{ route('jadwal.edit',$jadwal->id) }}"
-                                            class="inline-flex items-center justify-center h-10 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg">
+                                            class="inline-flex items-center justify-center h-10 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition">
 
                                             Edit
 
                                         </a>
 
-                                        <form action="{{ route('jadwal.destroy',$jadwal->id) }}"
+                                        <form
+                                            action="{{ route('jadwal.destroy',$jadwal->id) }}"
                                             method="POST">
 
                                             @csrf
@@ -138,7 +197,7 @@
 
                                             <button
                                                 onclick="return confirm('Yakin ingin menghapus jadwal ini?')"
-                                                class="inline-flex items-center justify-center h-10 px-4 bg-red-500 hover:bg-red-600 text-white rounded-lg">
+                                                class="inline-flex items-center justify-center h-10 px-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition">
 
                                                 Hapus
 
@@ -159,7 +218,7 @@
                                 <td colspan="4"
                                     class="text-center py-12 text-gray-500">
 
-                                    Belum ada jadwal.
+                                    Belum ada data jadwal.
 
                                 </td>
 
@@ -170,6 +229,12 @@
                         </tbody>
 
                     </table>
+
+                </div>
+
+                <div class="p-5">
+
+                    {{ $jadwals->links() }}
 
                 </div>
 

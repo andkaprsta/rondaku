@@ -77,6 +77,14 @@
 
                     </x-nav-link>
 
+                    <x-nav-link :href="route('petugas.riwayat')"
+                        :active="request()->routeIs('riwayat-absensi.*')">
+
+                        Riwayat Absensi
+
+                    </x-nav-link>
+
+
                     @endif
 
                 </div>

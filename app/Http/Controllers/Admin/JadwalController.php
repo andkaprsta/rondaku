@@ -9,9 +9,23 @@ use Illuminate\Http\Request;
 
 class JadwalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jadwals = Jadwal::with('petugas')->get();
+        $keyword = $request->keyword;
+
+        $jadwals = Jadwal::with('petugas')
+
+            ->when($keyword, function ($query) use ($keyword) {
+
+                $query->whereHas('petugas', function ($q) use ($keyword) {
+
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
+
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('jadwal.index', compact('jadwals'));
     }
@@ -35,7 +49,8 @@ class JadwalController extends Controller
             'petugas_id' => $request->petugas_id,
         ]);
 
-        return redirect()->route('jadwal.index')
+        return redirect()
+            ->route('jadwal.index')
             ->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
@@ -58,15 +73,17 @@ class JadwalController extends Controller
             'petugas_id' => $request->petugas_id,
         ]);
 
-        return redirect()->route('jadwal.index')
-            ->with('success', 'Jadwal berhasil diupdate.');
+        return redirect()
+            ->route('jadwal.index')
+            ->with('success', 'Jadwal berhasil diubah.');
     }
 
     public function destroy(Jadwal $jadwal)
     {
         $jadwal->delete();
 
-        return redirect()->route('jadwal.index')
+        return redirect()
+            ->route('jadwal.index')
             ->with('success', 'Jadwal berhasil dihapus.');
     }
 }

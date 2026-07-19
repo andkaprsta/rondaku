@@ -80,6 +80,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/absensi', [AdminAbsensiController::class, 'index'])
         ->name('admin.absensi');
+
+    Route::get('/admin/absensi/pdf', [AdminAbsensiController::class, 'exportPdf'])
+        ->name('admin.absensi.pdf');
 });
 
 /*
@@ -97,6 +100,9 @@ Route::middleware(['auth', 'petugas'])->group(function () {
 
     Route::post('/absensi', [PetugasAbsensiController::class, 'store'])
         ->name('absensi.store');
+        
+    Route::get('/riwayat-absensi', [App\Http\Controllers\Petugas\RiwayatAbsensiController::class, 'index'])
+        ->name('petugas.riwayat');
 });
 
 require __DIR__ . '/auth.php';

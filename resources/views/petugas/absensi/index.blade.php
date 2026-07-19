@@ -1,90 +1,171 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">
+
+        <h2 class="text-2xl font-bold text-gray-800">
+
             Absensi Petugas
+
         </h2>
+
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto">
+    <div class="py-8">
 
-            {{-- Alert Success --}}
+        <div class="max-w-3xl mx-auto px-6">
+
+            {{-- Alert --}}
             @if(session('success'))
-            <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-4">
+
+            <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 p-4">
+
                 {{ session('success') }}
+
             </div>
+
             @endif
 
-            {{-- Alert Error --}}
             @if(session('error'))
-            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+
+            <div class="mb-5 rounded-lg bg-red-100 border border-red-300 text-red-700 p-4">
+
                 {{ session('error') }}
+
             </div>
+
             @endif
 
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-white rounded-xl shadow-lg p-8">
 
                 @if($jadwal)
 
-                <h3 class="text-lg font-bold mb-4">
-                    Jadwal Ronda Hari Ini
-                </h3>
+                <div class="mb-6">
 
-                <table class="table-auto w-full mb-5">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">
 
-                    <tr>
-                        <td class="font-semibold py-2">
-                            Nama Petugas
-                        </td>
+                        Jadwal Hari Ini
 
-                        <td>
-                            {{ auth()->user()->name }}
-                        </td>
-                    </tr>
+                    </h3>
 
-                    <tr>
-                        <td class="font-semibold py-2">
-                            Tanggal
-                        </td>
+                    <div class="space-y-3">
 
-                        <td>
-                            {{ $jadwal->tanggal }}
-                        </td>
-                    </tr>
+                        <div class="flex justify-between border-b pb-2">
 
-                </table>
+                            <span class="text-gray-500">
 
-                @if($absensi)
+                                Tanggal
 
-                <div class="bg-green-100 text-green-700 p-4 rounded-lg">
+                            </span>
 
-                    ✅ Anda sudah melakukan absensi hari ini.
+                            <span class="font-semibold">
+
+                                {{ \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('d F Y') }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="flex justify-between border-b pb-2">
+
+                            <span class="text-gray-500">
+
+                                Petugas
+
+                            </span>
+
+                            <span class="font-semibold">
+
+                                {{ Auth::user()->name }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="flex justify-between">
+
+                            <span class="text-gray-500">
+
+                                Status
+
+                            </span>
+
+                            @if($sudahAbsen)
+
+                            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
+
+                                Sudah Absen
+
+                            </span>
+
+                            @else
+
+                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
+
+                                Belum Absen
+
+                            </span>
+
+                            @endif
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="text-center">
+
+                    @if(!$sudahAbsen)
+
+                    <form action="{{ route('absensi.store') }}" method="POST">
+
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+
+                            ✔ Absen Sekarang
+
+                        </button>
+
+                    </form>
+
+                    @else
+
+                    <button
+                        disabled
+                        class="bg-green-600 text-white px-8 py-3 rounded-lg cursor-not-allowed">
+
+                        ✔ Anda Sudah Absen Hari Ini
+
+                    </button>
+
+                    @endif
 
                 </div>
 
                 @else
 
-                <form action="{{ route('absensi.store') }}" method="POST">
+                <div class="text-center py-10">
 
-                    @csrf
+                    <div class="text-5xl mb-4">
 
-                    <button
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
+                        📅
 
-                        Hadir
+                    </div>
 
-                    </button>
+                    <h3 class="text-xl font-bold text-gray-700">
 
-                </form>
+                        Tidak Ada Jadwal Hari Ini
 
-                @endif
+                    </h3>
 
-                @else
+                    <p class="text-gray-500 mt-2">
 
-                <div class="bg-yellow-100 text-yellow-700 p-5 rounded-lg">
+                        Anda tidak memiliki jadwal ronda hari ini.
 
-                    Anda tidak memiliki jadwal ronda hari ini.
+                    </p>
 
                 </div>
 
@@ -93,7 +174,7 @@
             </div>
 
         </div>
+
     </div>
 
 </x-app-layout>
-```

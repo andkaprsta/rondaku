@@ -13,6 +13,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // =========================
+        // Statistik
+        // =========================
+
         $jumlahWarga = Warga::count();
 
         $jumlahPetugas = User::where('role', 'petugas')->count();
@@ -27,11 +31,53 @@ class DashboardController extends Controller
             Carbon::today()
         )->count();
 
+        // =========================
+        // Grafik 7 Hari Terakhir
+        // =========================
+
+        $labels = [];
+        $data = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+
+            $tanggal = Carbon::today()->subDays($i);
+
+            $labels[] = $tanggal->translatedFormat('d M');
+
+            $data[] = Absensi::whereDate(
+                'created_at',
+                $tanggal
+            )->count();
+        }
+
+        // =========================
+        // Absensi Terbaru
+        // =========================
+
+        $absensiTerbaru = Absensi::with('jadwal.petugas')
+
+            ->latest()
+
+            ->take(5)
+
+            ->get();
+
         return view('admin.dashboard', compact(
+
             'jumlahWarga',
+
             'jumlahPetugas',
+
             'jadwalHariIni',
-            'absensiHariIni'
+
+            'absensiHariIni',
+
+            'labels',
+
+            'data',
+
+            'absensiTerbaru'
+
         ));
     }
 }

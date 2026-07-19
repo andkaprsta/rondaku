@@ -22,42 +22,39 @@ class AbsensiController extends Controller
             ->first();
 
         $absensi = null;
+        $sudahAbsen = false;
 
         if ($jadwal) {
+
             $absensi = Absensi::where('jadwal_id', $jadwal->id)
                 ->first();
+
+            $sudahAbsen = $absensi ? true : false;
         }
 
         return view('petugas.absensi.index', compact(
             'jadwal',
-            'absensi'
+            'absensi',
+            'sudahAbsen'
         ));
     }
 
     public function store(Request $request)
     {
-        /** @var User $user */
         $user = Auth::user();
 
         $jadwal = Jadwal::where('petugas_id', $user->id)
-            ->whereDate('tanggal', Carbon::today())
+            ->whereDate('tanggal', now())
             ->first();
 
         if (!$jadwal) {
-            return back()->with(
-                'error',
-                'Anda tidak memiliki jadwal ronda hari ini.'
-            );
+            return back()->with('error', 'Anda tidak memiliki jadwal ronda hari ini.');
         }
 
-        $cek = Absensi::where('jadwal_id', $jadwal->id)
-            ->first();
+        $cek = Absensi::where('jadwal_id', $jadwal->id)->first();
 
         if ($cek) {
-            return back()->with(
-                'error',
-                'Anda sudah melakukan absensi.'
-            );
+            return back()->with('error', 'Anda sudah melakukan absensi hari ini.');
         }
 
         Absensi::create([
@@ -65,9 +62,6 @@ class AbsensiController extends Controller
             'status' => 'hadir'
         ]);
 
-        return back()->with(
-            'success',
-            'Absensi berhasil.'
-        );
+        return back()->with('success', 'Absensi berhasil.');
     }
 }
