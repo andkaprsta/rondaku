@@ -9,7 +9,6 @@ class Absensi extends Model
     protected $table = 'absensi';
     protected $fillable = [
         'jadwal_id',
-        'warga_id',
         'status'
     ];
 
@@ -18,8 +17,5 @@ class Absensi extends Model
         return $this->belongsTo(Jadwal::class);
     }
 
-    public function warga()
-    {
-        return $this->belongsTo(Warga::class);
-    }
+   
 }

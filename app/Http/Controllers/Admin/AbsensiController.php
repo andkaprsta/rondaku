@@ -7,15 +7,9 @@ use App\Models\Absensi;
 
 class AbsensiController extends Controller
 {
-    /**
-     * Menampilkan rekap absensi.
-     */
     public function index()
     {
-        $absensis = Absensi::with([
-            'warga',
-            'jadwal.petugas'
-        ])
+        $absensis = Absensi::with('jadwal.petugas')
             ->latest()
             ->get();
 

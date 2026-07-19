@@ -1,94 +1,123 @@
-
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">
-            Edit User
-        </h2>
+
+        <div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+
+                Edit User
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Perbarui informasi user.
+
+            </p>
+
+        </div>
+
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-8">
 
-        <div class="max-w-xl mx-auto bg-white shadow rounded p-6">
+        <div class="max-w-3xl mx-auto px-6">
 
-            <form
-                action="{{ route('user.update',$user->id) }}"
-                method="POST">
+            <div class="bg-white rounded-xl shadow-lg p-8">
 
-                @csrf
-                @method('PUT')
+                <form action="{{ route('user.update',$user->id) }}" method="POST">
 
-                <div class="mb-4">
+                    @csrf
+                    @method('PUT')
 
-                    <label>Nama</label>
+                    <div class="mb-5">
 
-                    <input
-                        type="text"
-                        name="name"
-                        value="{{ $user->name }}"
-                        class="w-full border rounded p-2">
+                        <label class="block font-semibold mb-2">
+                            Nama
+                        </label>
 
-                </div>
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ old('name',$user->name) }}"
+                            class="w-full border rounded-lg px-4 py-3">
 
-                <div class="mb-4">
+                    </div>
 
-                    <label>Email</label>
+                    <div class="mb-5">
 
-                    <input
-                        type="email"
-                        name="email"
-                        value="{{ $user->email }}"
-                        class="w-full border rounded p-2">
+                        <label class="block font-semibold mb-2">
+                            Email
+                        </label>
 
-                </div>
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ old('email',$user->email) }}"
+                            class="w-full border rounded-lg px-4 py-3">
 
-                <div class="mb-4">
+                    </div>
 
-                    <label>Password Baru</label>
+                    <div class="mb-5">
 
-                    <input
-                        type="password"
-                        name="password"
-                        class="w-full border rounded p-2">
+                        <label class="block font-semibold mb-2">
+                            Role
+                        </label>
 
-                    <p class="text-sm text-gray-500">
-                        Kosongkan jika tidak ingin mengganti password.
-                    </p>
+                        <select
+                            name="role"
+                            class="w-full border rounded-lg px-4 py-3">
 
-                </div>
+                            <option value="admin"
+                                {{ $user->role=='admin'?'selected':'' }}>
+                                Admin
+                            </option>
 
-                <div class="mb-4">
+                            <option value="petugas"
+                                {{ $user->role=='petugas'?'selected':'' }}>
+                                Petugas
+                            </option>
 
-                    <label>Role</label>
+                        </select>
 
-                    <select
-                        name="role"
-                        class="w-full border rounded p-2">
+                    </div>
 
-                        <option
-                            value="admin"
-                            {{ $user->role=='admin' ? 'selected':'' }}>
-                            Admin
-                        </option>
+                    <div class="mb-8">
 
-                        <option
-                            value="petugas"
-                            {{ $user->role=='petugas' ? 'selected':'' }}>
-                            Petugas
-                        </option>
+                        <label class="block font-semibold mb-2">
+                            Password Baru
+                        </label>
 
-                    </select>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Kosongkan jika tidak diubah"
+                            class="w-full border rounded-lg px-4 py-3">
 
-                </div>
+                    </div>
 
-                <button
-                    class="bg-green-600 text-white px-5 py-2 rounded">
+                    <div class="flex justify-end gap-3">
 
-                    Update
+                        <a href="{{ route('user.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
 
-                </button>
+                            Batal
 
-            </form>
+                        </a>
+
+                        <button
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded-lg">
+
+                            Update
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
 

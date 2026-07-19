@@ -2,35 +2,29 @@
 
 namespace App\Http\Controllers\Petugas;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use App\Models\Jadwal;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AbsensiController extends Controller
 {
-    /**
-     * Dashboard Absensi Petugas
-     */
     public function index()
     {
         /** @var User $user */
         $user = Auth::user();
 
-        // Cari jadwal petugas hari ini
         $jadwal = Jadwal::where('petugas_id', $user->id)
             ->whereDate('tanggal', Carbon::today())
             ->first();
 
-        // Cek apakah sudah absen
         $absensi = null;
 
         if ($jadwal) {
             $absensi = Absensi::where('jadwal_id', $jadwal->id)
-                ->where('warga_id', $user->warga_id)
                 ->first();
         }
 
@@ -40,9 +34,6 @@ class AbsensiController extends Controller
         ));
     }
 
-    /**
-     * Simpan Absensi
-     */
     public function store(Request $request)
     {
         /** @var User $user */
@@ -60,7 +51,6 @@ class AbsensiController extends Controller
         }
 
         $cek = Absensi::where('jadwal_id', $jadwal->id)
-            ->where('warga_id', $user->warga_id)
             ->first();
 
         if ($cek) {
@@ -72,7 +62,6 @@ class AbsensiController extends Controller
 
         Absensi::create([
             'jadwal_id' => $jadwal->id,
-            'warga_id' => $user->warga_id,
             'status' => 'hadir'
         ]);
 

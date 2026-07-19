@@ -1,80 +1,112 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">
-            Edit Warga
-        </h2>
+
+        <div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+
+                Edit Warga
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Perbarui data warga.
+
+            </p>
+
+        </div>
+
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto">
+    <div class="py-8">
 
-            <div class="bg-white shadow rounded-lg p-6">
+        <div class="max-w-3xl mx-auto px-6">
 
-                <form action="{{ route('warga.update',$warga->id) }}" method="POST">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+
+                <form
+                    action="{{ route('warga.update',$warga->id) }}"
+                    method="POST">
 
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-4">
+                    {{-- Nama --}}
+                    <div class="mb-5">
 
-                        <label class="block mb-2">
+                        <label class="block font-semibold mb-2">
+
                             Nama
+
                         </label>
 
                         <input
                             type="text"
                             name="nama"
                             value="{{ old('nama',$warga->nama) }}"
-                            class="w-full border rounded-lg p-2">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                     </div>
 
-                    <div class="mb-4">
+                    {{-- Alamat --}}
+                    <div class="mb-5">
 
-                        <label class="block mb-2">
+                        <label class="block font-semibold mb-2">
+
                             Alamat
+
                         </label>
 
                         <textarea
                             name="alamat"
-                            class="w-full border rounded-lg p-2">{{ old('alamat',$warga->alamat) }}</textarea>
+                            rows="4"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">{{ old('alamat',$warga->alamat) }}</textarea>
 
                     </div>
 
-                    <div class="mb-4">
+                    {{-- No HP --}}
+                    <div class="mb-8">
 
-                        <label class="block mb-2">
-                            No HP
+                        <label class="block font-semibold mb-2">
+
+                            Nomor HP
+
                         </label>
 
                         <input
                             type="text"
                             name="no_hp"
                             value="{{ old('no_hp',$warga->no_hp) }}"
-                            class="w-full border rounded-lg p-2">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                     </div>
 
-                    <button
-                        class="bg-yellow-500 text-white px-5 py-2 rounded">
+                    <div class="flex justify-end gap-3">
 
-                        Update
+                        <a href="{{ route('warga.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
 
-                    </button>
+                            Batal
 
-                    <a
-                        href="{{ route('warga.index') }}"
-                        class="bg-gray-500 text-white px-5 py-2 rounded">
+                        </a>
 
-                        Kembali
+                        <button
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded-lg">
 
-                    </a>
+                            Update
+
+                        </button>
+
+                    </div>
 
                 </form>
 
             </div>
 
         </div>
+
     </div>
 
 </x-app-layout>

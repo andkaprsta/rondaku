@@ -1,77 +1,129 @@
-
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">
-            Tambah User
-        </h2>
+
+        <div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+
+                Tambah User
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Tambahkan akun admin atau petugas.
+
+            </p>
+
+        </div>
+
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-8">
 
-        <div class="max-w-xl mx-auto bg-white shadow rounded p-6">
+        <div class="max-w-3xl mx-auto px-6">
 
-            <form action="{{ route('user.store') }}" method="POST">
+            <div class="bg-white rounded-xl shadow-lg p-8">
 
-                @csrf
+                <form action="{{ route('user.store') }}" method="POST">
 
-                <div class="mb-4">
+                    @csrf
 
-                    <label>Nama</label>
+                    <div class="mb-5">
 
-                    <input
-                        type="text"
-                        name="name"
-                        class="w-full border rounded p-2">
+                        <label class="block font-semibold mb-2">
+                            Nama
+                        </label>
 
-                </div>
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ old('name') }}"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
 
-                <div class="mb-4">
+                        @error('name')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
 
-                    <label>Email</label>
+                    </div>
 
-                    <input
-                        type="email"
-                        name="email"
-                        class="w-full border rounded p-2">
+                    <div class="mb-5">
 
-                </div>
+                        <label class="block font-semibold mb-2">
+                            Email
+                        </label>
 
-                <div class="mb-4">
+                        <input
+                            type="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
 
-                    <label>Password</label>
+                        @error('email')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
 
-                    <input
-                        type="password"
-                        name="password"
-                        class="w-full border rounded p-2">
+                    </div>
 
-                </div>
+                    <div class="mb-5">
 
-                <div class="mb-4">
+                        <label class="block font-semibold mb-2">
+                            Role
+                        </label>
 
-                    <label>Role</label>
+                        <select
+                            name="role"
+                            class="w-full border rounded-lg px-4 py-3">
 
-                    <select
-                        name="role"
-                        class="w-full border rounded p-2">
+                            <option value="">-- Pilih Role --</option>
 
-                        <option value="petugas">Petugas</option>
+                            <option value="admin">
+                                Admin
+                            </option>
 
-                        <option value="admin">Admin</option>
+                            <option value="petugas">
+                                Petugas
+                            </option>
 
-                    </select>
+                        </select>
 
-                </div>
+                    </div>
 
-                <button
-                    class="bg-blue-600 text-white px-5 py-2 rounded">
+                    <div class="mb-8">
 
-                    Simpan
+                        <label class="block font-semibold mb-2">
+                            Password
+                        </label>
 
-                </button>
+                        <input
+                            type="password"
+                            name="password"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500">
 
-            </form>
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+
+                        <a href="{{ route('user.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
+
+                            Batal
+
+                        </a>
+
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
+
+                            Simpan
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
 

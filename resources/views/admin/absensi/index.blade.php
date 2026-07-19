@@ -38,7 +38,7 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                {{ $absensi->warga->nama }}
+                                {{ $absensi->jadwal?->petugas?->name ?? '-' }}
                             </td>
 
                             <td class="px-6 py-4">

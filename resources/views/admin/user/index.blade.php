@@ -2,112 +2,226 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">
-            Data User
-        </h2>
-    </x-slot>
 
-    <div class="py-6">
+        <div class="flex items-center justify-between">
 
-        <div class="max-w-7xl mx-auto">
+            <div>
 
-            @if(session('success'))
-            <div class="bg-green-200 text-green-800 p-3 rounded mb-4">
-                {{ session('success') }}
+                <h2 class="text-2xl font-bold text-gray-800">
+
+                    Data User
+
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-1">
+
+                    Kelola akun admin dan petugas.
+
+                </p>
+
             </div>
-            @endif
 
             <a href="{{ route('user.create') }}"
-                class="bg-blue-600 text-white px-4 py-2 rounded">
-                Tambah User
+                class="bg-blue-600 hover:bg-blue-700 transition text-white px-5 py-3 rounded-lg shadow">
+
+                + Tambah User
+
             </a>
 
-            <div class="bg-white shadow rounded mt-4 overflow-hidden">
+        </div>
 
-                <table class="min-w-full">
+    </x-slot>
 
-                    <thead class="bg-gray-100">
+    <div class="py-8">
 
-                        <tr>
+        <div class="max-w-7xl mx-auto px-6">
 
-                            <th class="px-4 py-3">No</th>
-                            <th class="px-4 py-3">Nama</th>
-                            <th class="px-4 py-3">Email</th>
-                            <th class="px-4 py-3">Role</th>
-                            <th class="px-4 py-3">Aksi</th>
+            @if(session('success'))
 
-                        </tr>
+            <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 px-5 py-4">
 
-                    </thead>
+                {{ session('success') }}
 
-                    <tbody>
+            </div>
 
-                        @forelse($users as $user)
+            @endif
 
-                        <tr class="border-b">
+            <div class="bg-white rounded-xl shadow-lg">
 
-                            <td class="px-4 py-3">
-                                {{ $loop->iteration }}
-                            </td>
+                <div class="flex justify-between items-center p-6 border-b">
 
-                            <td class="px-4 py-3">
-                                {{ $user->name }}
-                            </td>
+                    <div>
 
-                            <td class="px-4 py-3">
-                                {{ $user->email }}
-                            </td>
+                        <h3 class="text-lg font-bold text-gray-700">
 
-                            <td class="px-4 py-3">
-                                {{ ucfirst($user->role) }}
-                            </td>
+                            Daftar User
 
-                            <td class="px-4 py-3">
+                        </h3>
 
-                                <a href="{{ route('user.edit',$user->id) }}"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded">
-                                    Edit
-                                </a>
+                        <p class="text-sm text-gray-500">
 
-                                <form action="{{ route('user.destroy',$user->id) }}"
-                                    method="POST"
-                                    class="inline">
+                            Total :
 
-                                    @csrf
-                                    @method('DELETE')
+                            <span class="font-bold text-blue-600">
 
-                                    <button
-                                        onclick="return confirm('Hapus user ini?')"
-                                        class="bg-red-600 text-white px-3 py-1 rounded">
+                                {{ count($users) }}
 
-                                        Hapus
+                            </span>
 
-                                    </button>
+                            User
 
-                                </form>
+                        </p>
 
-                            </td>
+                    </div>
 
-                        </tr>
+                    <input
+                        type="text"
+                        placeholder="Cari user..."
+                        class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
-                        @empty
+                </div>
 
-                        <tr>
+                <div class="overflow-x-auto">
 
-                            <td colspan="5"
-                                class="text-center py-5">
+                    <table class="min-w-full">
 
-                                Belum ada user.
+                        <thead class="bg-gray-100">
 
-                            </td>
+                            <tr>
 
-                        </tr>
+                                <th class="px-6 py-4 text-left">
 
-                        @endforelse
+                                    No
 
-                    </tbody>
+                                </th>
 
-                </table>
+                                <th class="px-6 py-4 text-left">
+
+                                    Nama
+
+                                </th>
+
+                                <th class="px-6 py-4 text-left">
+
+                                    Email
+
+                                </th>
+
+                                <th class="px-6 py-4 text-left">
+
+                                    Role
+
+                                </th>
+
+                                <th class="px-6 py-4 text-center">
+
+                                    Aksi
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @forelse($users as $user)
+
+                            <tr class="border-b hover:bg-gray-50 transition">
+
+                                <td class="px-6 py-4">
+
+                                    {{ $loop->iteration }}
+
+                                </td>
+
+                                <td class="px-6 py-4 font-semibold">
+
+                                    {{ $user->name }}
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    {{ $user->email }}
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    @if($user->role == 'admin')
+
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+
+                                        Admin
+
+                                    </span>
+
+                                    @else
+
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+
+                                        Petugas
+
+                                    </span>
+
+                                    @endif
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    <div class="flex justify-center gap-2">
+
+                                        <a href="{{ route('user.edit',$user->id) }}"
+                                            class="inline-flex items-center justify-center h-10 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition">
+
+                                            Edit
+
+                                        </a>
+
+                                        <form action="{{ route('user.destroy',$user->id) }}"
+                                            method="POST">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                onclick="return confirm('Yakin ingin menghapus user ini?')"
+                                                class="inline-flex items-center justify-center h-10 px-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition">
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            @empty
+
+                            <tr>
+
+                                <td colspan="5"
+                                    class="text-center py-12 text-gray-500">
+
+                                    Belum ada data user.
+
+                                </td>
+
+                            </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 

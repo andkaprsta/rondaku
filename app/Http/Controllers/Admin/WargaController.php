@@ -11,13 +11,22 @@ class WargaController extends Controller
     /**
      * Menampilkan semua data warga
      */
-    public function index()
+    public function index(Request $request)
     {
-        $warga = Warga::all();
+        $keyword = $request->keyword;
+
+        $warga = Warga::when($keyword, function ($query) use ($keyword) {
+
+            $query->where('nama', 'like', "%{$keyword}%")
+                ->orWhere('alamat', 'like', "%{$keyword}%")
+                ->orWhere('no_hp', 'like', "%{$keyword}%");
+        })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('warga.index', compact('warga'));
     }
-
     /**
      * Menampilkan form tambah warga
      */

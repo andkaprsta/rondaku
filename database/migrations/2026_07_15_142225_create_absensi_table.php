@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_id')->constrained('jadwal');
-            $table->foreignId('warga_id')->constrained('warga');
+            $table->foreignId('jadwal_id')->constrained('jadwal')->cascadeOnDelete();
             $table->enum('status', ['hadir', 'tidak_hadir']);
             $table->timestamps();
         });

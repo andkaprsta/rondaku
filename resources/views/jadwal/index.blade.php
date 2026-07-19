@@ -1,102 +1,182 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800">
-                Data Jadwal
-            </h2>
+
+        <div class="flex items-center justify-between">
+
+            <div>
+
+                <h2 class="text-2xl font-bold text-gray-800">
+
+                    Data Jadwal Ronda
+
+                </h2>
+
+                <p class="text-gray-500 mt-1">
+
+                    Kelola jadwal petugas ronda.
+
+                </p>
+
+            </div>
 
             <a href="{{ route('jadwal.create') }}"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow">
+
                 + Tambah Jadwal
+
             </a>
+
         </div>
+
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto">
+    <div class="py-8">
+
+        <div class="max-w-7xl mx-auto px-6">
 
             @if(session('success'))
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+
+            <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 px-5 py-4">
+
                 {{ session('success') }}
+
             </div>
+
             @endif
 
-            <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="bg-white rounded-xl shadow-lg">
 
-                <table class="min-w-full">
+                <div class="p-6 border-b">
 
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-3">No</th>
-                            <th class="px-6 py-3">Tanggal</th>
-                            <th class="px-6 py-3">Petugas</th>
-                            <th class="px-6 py-3">Aksi</th>
-                        </tr>
-                    </thead>
+                    <h3 class="text-lg font-bold text-gray-700">
 
-                    <tbody>
+                        Daftar Jadwal
 
-                        @forelse($jadwals as $jadwal)
+                    </h3>
 
-                        <tr class="border-t">
+                    <p class="text-sm text-gray-500">
 
-                            <td class="px-6 py-4">
-                                {{ $loop->iteration }}
-                            </td>
+                        Total :
 
-                            <td class="px-6 py-4">
-                                {{ $jadwal->tanggal }}
-                            </td>
+                        <span class="font-bold text-blue-600">
 
-                            <td class="px-6 py-4">
-                                {{ $jadwal->petugas->name }}
-                            </td>
+                            {{ count($jadwals) }}
 
-                            <td class="px-6 py-4">
+                        </span>
 
-                                <a href="{{ route('jadwal.edit',$jadwal->id) }}"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded">
-                                    Edit
-                                </a>
+                        Jadwal
 
-                                <form action="{{ route('jadwal.destroy',$jadwal->id) }}"
-                                    method="POST"
-                                    class="inline">
+                    </p>
 
-                                    @csrf
-                                    @method('DELETE')
+                </div>
 
-                                    <button
-                                        onclick="return confirm('Yakin ingin menghapus?')"
-                                        class="bg-red-500 text-white px-3 py-1 rounded">
+                <div class="overflow-x-auto">
 
-                                        Hapus
+                    <table class="min-w-full">
 
-                                    </button>
+                        <thead class="bg-gray-100">
 
-                                </form>
+                            <tr>
 
-                            </td>
+                                <th class="px-6 py-4 text-left">No</th>
 
-                        </tr>
+                                <th class="px-6 py-4 text-left">Tanggal</th>
 
-                        @empty
+                                <th class="px-6 py-4 text-left">Petugas</th>
 
-                        <tr>
-                            <td colspan="4" class="text-center py-5">
-                                Belum ada jadwal.
-                            </td>
-                        </tr>
+                                <th class="px-6 py-4 text-center">Aksi</th>
 
-                        @endforelse
+                            </tr>
 
-                    </tbody>
+                        </thead>
 
-                </table>
+                        <tbody>
+
+                            @forelse($jadwals as $jadwal)
+
+                            <tr class="border-b hover:bg-gray-50">
+
+                                <td class="px-6 py-4">
+
+                                    {{ $loop->iteration }}
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d F Y') }}
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+
+                                        {{ $jadwal->petugas->name }}
+
+                                    </span>
+
+                                </td>
+
+                                <td class="px-6 py-4">
+
+                                    <div class="flex justify-center gap-2">
+
+                                        <a href="{{ route('jadwal.edit',$jadwal->id) }}"
+                                            class="inline-flex items-center justify-center h-10 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg">
+
+                                            Edit
+
+                                        </a>
+
+                                        <form action="{{ route('jadwal.destroy',$jadwal->id) }}"
+                                            method="POST">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                onclick="return confirm('Yakin ingin menghapus jadwal ini?')"
+                                                class="inline-flex items-center justify-center h-10 px-4 bg-red-500 hover:bg-red-600 text-white rounded-lg">
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            @empty
+
+                            <tr>
+
+                                <td colspan="4"
+                                    class="text-center py-12 text-gray-500">
+
+                                    Belum ada jadwal.
+
+                                </td>
+
+                            </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
         </div>
+
     </div>
 
 </x-app-layout>

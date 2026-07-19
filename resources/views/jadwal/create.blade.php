@@ -1,77 +1,122 @@
 <x-app-layout>
 
-<x-slot name="header">
-    <h2 class="font-semibold text-xl">
-        Tambah Jadwal
-    </h2>
-</x-slot>
+    <x-slot name="header">
 
-<div class="py-6">
+        <div>
 
-<div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800">
 
-<div class="bg-white shadow rounded-lg p-6">
+                Tambah Jadwal Ronda
 
-<form action="{{ route('jadwal.store') }}" method="POST">
+            </h2>
 
-@csrf
+            <p class="text-gray-500 mt-1">
 
-<div class="mb-4">
+                Tambahkan jadwal ronda baru.
 
-<label>Tanggal</label>
+            </p>
 
-<input
-type="date"
-name="tanggal"
-class="w-full border rounded p-2">
+        </div>
 
-</div>
+    </x-slot>
 
-<div class="mb-4">
+    <div class="py-8">
 
-<label>Petugas</label>
+        <div class="max-w-3xl mx-auto px-6">
 
-<select
-name="petugas_id"
-class="w-full border rounded p-2">
+            <div class="bg-white rounded-xl shadow-lg p-8">
 
-<option value="">-- Pilih Petugas --</option>
+                <form action="{{ route('jadwal.store') }}" method="POST">
 
-@foreach($petugas as $item)
+                    @csrf
 
-<option value="{{ $item->id }}">
+                    <div class="mb-6">
 
-{{ $item->name }}
+                        <label class="block font-semibold text-gray-700 mb-2">
 
-</option>
+                            Tanggal Ronda
 
-@endforeach
+                        </label>
 
-</select>
+                        <input
+                            type="date"
+                            name="tanggal"
+                            value="{{ old('tanggal') }}"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
-</div>
+                        @error('tanggal')
+                        <p class="text-red-500 text-sm mt-2">
+                            {{ $message }}
+                        </p>
+                        @enderror
 
-<button
-class="bg-blue-600 text-white px-5 py-2 rounded">
+                    </div>
 
-Simpan
+                    <div class="mb-8">
 
-</button>
+                        <label class="block font-semibold text-gray-700 mb-2">
 
-<a
-href="{{ route('jadwal.index') }}"
-class="bg-gray-500 text-white px-5 py-2 rounded">
+                            Petugas
 
-Kembali
+                        </label>
 
-</a>
+                        <select
+                            name="petugas_id"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
-</form>
+                            <option value="">
 
-</div>
+                                -- Pilih Petugas --
 
-</div>
+                            </option>
 
-</div>
+                            @foreach($petugas as $item)
+
+                            <option
+                                value="{{ $item->id }}"
+                                {{ old('petugas_id') == $item->id ? 'selected' : '' }}>
+
+                                {{ $item->name }}
+
+                            </option>
+
+                            @endforeach
+
+                        </select>
+
+                        @error('petugas_id')
+                        <p class="text-red-500 text-sm mt-2">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+
+                        <a href="{{ route('jadwal.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg transition">
+
+                            Batal
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg transition">
+
+                            Simpan Jadwal
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </x-app-layout>

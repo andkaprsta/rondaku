@@ -9,10 +9,11 @@ use App\Http\Controllers\Admin\WargaController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\AbsensiController as AdminAbsensiController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 // Petugas
 use App\Http\Controllers\Petugas\AbsensiController as PetugasAbsensiController;
-use App\Http\Controllers\Petugas\DashboardController;
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,12 +67,10 @@ Route::middleware('auth')->group(function () {
 | Admin
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
     Route::resource('warga', WargaController::class);
 
@@ -88,10 +87,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 | Petugas
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth', 'petugas'])->group(function () {
 
-    Route::get('/petugas/dashboard', [DashboardController::class, 'index'])
+    Route::get('/petugas/dashboard', [PetugasDashboardController::class, 'index'])
         ->name('petugas.dashboard');
 
     Route::get('/absensi', [PetugasAbsensiController::class, 'index'])

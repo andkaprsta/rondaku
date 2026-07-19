@@ -1,49 +1,75 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl">
-            Edit Jadwal
-        </h2>
+
+        <div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+
+                Edit Jadwal Ronda
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Perbarui jadwal ronda.
+
+            </p>
+
+        </div>
+
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-8">
 
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-3xl mx-auto px-6">
 
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-white rounded-xl shadow-lg p-8">
 
-                <form
-                    action="{{ route('jadwal.update',$jadwal->id) }}"
-                    method="POST">
+                <form action="{{ route('jadwal.update',$jadwal->id) }}" method="POST">
 
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-4">
+                    <div class="mb-6">
 
-                        <label>Tanggal</label>
+                        <label class="block font-semibold text-gray-700 mb-2">
+
+                            Tanggal Ronda
+
+                        </label>
 
                         <input
                             type="date"
                             name="tanggal"
-                            value="{{ $jadwal->tanggal }}"
-                            class="w-full border rounded p-2">
+                            value="{{ old('tanggal',$jadwal->tanggal) }}"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+                        @error('tanggal')
+                        <p class="text-red-500 text-sm mt-2">
+                            {{ $message }}
+                        </p>
+                        @enderror
 
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-8">
 
-                        <label>Petugas</label>
+                        <label class="block font-semibold text-gray-700 mb-2">
+
+                            Petugas
+
+                        </label>
 
                         <select
                             name="petugas_id"
-                            class="w-full border rounded p-2">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                             @foreach($petugas as $item)
 
                             <option
                                 value="{{ $item->id }}"
-                                {{ $jadwal->petugas_id == $item->id ? 'selected' : '' }}>
+                                {{ old('petugas_id',$jadwal->petugas_id)==$item->id ? 'selected' : '' }}>
 
                                 {{ $item->name }}
 
@@ -53,22 +79,32 @@
 
                         </select>
 
+                        @error('petugas_id')
+                        <p class="text-red-500 text-sm mt-2">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
                     </div>
 
-                    <button
-                        class="bg-yellow-500 text-white px-5 py-2 rounded">
+                    <div class="flex justify-end gap-3">
 
-                        Update
+                        <a href="{{ route('jadwal.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg transition">
 
-                    </button>
+                            Batal
 
-                    <a
-                        href="{{ route('jadwal.index') }}"
-                        class="bg-gray-500 text-white px-5 py-2 rounded">
+                        </a>
 
-                        Kembali
+                        <button
+                            type="submit"
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded-lg transition">
 
-                    </a>
+                            Update Jadwal
+
+                        </button>
+
+                    </div>
 
                 </form>
 

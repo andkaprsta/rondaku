@@ -1,74 +1,140 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">
-            Tambah Warga
-        </h2>
+
+        <div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+
+                Tambah Warga
+
+            </h2>
+
+            <p class="text-gray-500 mt-1">
+
+                Tambahkan data warga baru.
+
+            </p>
+
+        </div>
+
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-4xl mx-auto">
+    <div class="py-8">
 
-            <div class="bg-white shadow rounded-lg p-6">
+        <div class="max-w-3xl mx-auto px-6">
 
-                <form action="{{ route('warga.store') }}" method="POST">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+
+                <form action="{{ route('warga.store') }}"
+                    method="POST">
 
                     @csrf
 
-                    <div class="mb-4">
-                        <label class="block mb-2">Nama</label>
+                    {{-- Nama --}}
+                    <div class="mb-5">
+
+                        <label class="block font-semibold mb-2">
+
+                            Nama
+
+                        </label>
 
                         <input
                             type="text"
                             name="nama"
                             value="{{ old('nama') }}"
-                            class="w-full border rounded-lg p-2">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                         @error('nama')
-                        <small class="text-red-500">{{ $message }}</small>
+
+                        <p class="text-red-500 text-sm mt-1">
+
+                            {{ $message }}
+
+                        </p>
+
                         @enderror
+
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block mb-2">Alamat</label>
+                    {{-- Alamat --}}
+                    <div class="mb-5">
+
+                        <label class="block font-semibold mb-2">
+
+                            Alamat
+
+                        </label>
 
                         <textarea
                             name="alamat"
-                            class="w-full border rounded-lg p-2">{{ old('alamat') }}</textarea>
+                            rows="4"
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">{{ old('alamat') }}</textarea>
 
                         @error('alamat')
-                        <small class="text-red-500">{{ $message }}</small>
+
+                        <p class="text-red-500 text-sm mt-1">
+
+                            {{ $message }}
+
+                        </p>
+
                         @enderror
+
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block mb-2">No HP</label>
+                    {{-- No HP --}}
+                    <div class="mb-8">
+
+                        <label class="block font-semibold mb-2">
+
+                            Nomor HP
+
+                        </label>
 
                         <input
                             type="text"
                             name="no_hp"
                             value="{{ old('no_hp') }}"
-                            class="w-full border rounded-lg p-2">
+                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                         @error('no_hp')
-                        <small class="text-red-500">{{ $message }}</small>
+
+                        <p class="text-red-500 text-sm mt-1">
+
+                            {{ $message }}
+
+                        </p>
+
                         @enderror
+
                     </div>
 
-                    <button
-                        class="bg-blue-600 text-white px-5 py-2 rounded">
-                        Simpan
-                    </button>
+                    <div class="flex justify-end gap-3">
 
-                    <a href="{{ route('warga.index') }}"
-                        class="bg-gray-500 text-white px-5 py-2 rounded">
-                        Kembali
-                    </a>
+                        <a href="{{ route('warga.index') }}"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
+
+                            Batal
+
+                        </a>
+
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
+
+                            Simpan
+
+                        </button>
+
+                    </div>
 
                 </form>
 
             </div>
 
         </div>
+
     </div>
 
 </x-app-layout>
