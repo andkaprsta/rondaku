@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use App\Models\User;
+use App\Models\Absensi;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -39,14 +40,14 @@ class JadwalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'tanggal' => 'required|date',
-            'petugas_id' => 'required|exists:users,id',
-        ]);
-
-        Jadwal::create([
+        $jadwal = Jadwal::create([
             'tanggal' => $request->tanggal,
             'petugas_id' => $request->petugas_id,
+        ]);
+
+        Absensi::create([
+            'jadwal_id' => $jadwal->id,
+            'status' => 'tidak_hadir',
         ]);
 
         return redirect()

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use App\Models\Jadwal;
 use App\Models\User;
+use App\Models\ActivityLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,9 @@ class AbsensiController extends Controller
             $absensi = Absensi::where('jadwal_id', $jadwal->id)
                 ->first();
 
-            $sudahAbsen = $absensi ? true : false;
+            if ($absensi && $absensi->status == 'hadir') {
+                $sudahAbsen = true;
+            }
         }
 
         return view('petugas.absensi.index', compact(
@@ -41,9 +44,7 @@ class AbsensiController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
-
-        $jadwal = Jadwal::where('petugas_id', $user->id)
+        $jadwal = Jadwal::where('petugas_id', auth()->id())
             ->whereDate('tanggal', now())
             ->first();
 
@@ -51,17 +52,25 @@ class AbsensiController extends Controller
             return back()->with('error', 'Anda tidak memiliki jadwal ronda hari ini.');
         }
 
-        $cek = Absensi::where('jadwal_id', $jadwal->id)->first();
+        $absensi = Absensi::where('jadwal_id', $jadwal->id)->first();
 
-        if ($cek) {
+        if (!$absensi) {
+            return back()->with('error', 'Data absensi tidak ditemukan.');
+        }
+
+        if ($absensi->status == 'hadir') {
             return back()->with('error', 'Anda sudah melakukan absensi hari ini.');
         }
 
-        Absensi::create([
-            'jadwal_id' => $jadwal->id,
+        $absensi->update([
             'status' => 'hadir'
         ]);
 
-        return back()->with('success', 'Absensi berhasil.');
+        ActivityLog::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Melakukan absensi'
+        ]);
+
+        return back()->with('success', 'Absensi berhasil dilakukan.');
     }
 }

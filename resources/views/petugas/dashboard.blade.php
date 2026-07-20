@@ -2,21 +2,11 @@
 
     <x-slot name="header">
 
-        <div>
+        <h2 class="text-2xl font-bold text-gray-800">
 
-            <h2 class="text-2xl font-bold text-gray-800">
+            Dashboard Petugas
 
-                Dashboard Petugas
-
-            </h2>
-
-            <p class="text-sm text-gray-500 mt-1">
-
-                Selamat datang di Sistem Informasi RondaKu.
-
-            </p>
-
-        </div>
+        </h2>
 
     </x-slot>
 
@@ -24,36 +14,30 @@
 
         <div class="max-w-7xl mx-auto px-6">
 
-            {{-- Welcome --}}
-            <div class="bg-white rounded-xl shadow p-6 mb-6">
+            {{-- Welcome Card --}}
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl shadow-lg p-8 text-white mb-8">
 
-                <h2 class="text-2xl font-bold text-gray-800">
+                <h1 class="text-3xl font-bold">
 
-                    Halo,
+                    Halo, {{ Auth::user()->name }} 👋
 
-                    <span class="text-blue-600">
+                </h1>
 
-                        {{ Auth::user()->name }}
+                <p class="mt-2 text-blue-100">
 
-                    </span>
+                    Selamat datang di Sistem Informasi RondaKu.
 
-                    👋
-
-                </h2>
-
-                <p class="text-gray-500 mt-2">
-
-                    Selamat bertugas. Jangan lupa melakukan absensi sesuai jadwal ronda hari ini.
+                    Silakan lakukan absensi sesuai jadwal ronda Anda.
 
                 </p>
 
             </div>
 
             {{-- Statistik --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
-                {{-- Jadwal --}}
-                <div class="bg-white rounded-xl shadow p-6">
+                {{-- Hadir --}}
+                <div class="bg-white rounded-xl shadow-lg border-l-4 border-green-500 p-6">
 
                     <div class="flex justify-between items-center">
 
@@ -61,30 +45,26 @@
 
                             <p class="text-gray-500 text-sm">
 
-                                Jadwal Hari Ini
+                                Total Hadir
 
                             </p>
 
-                            <h2 class="text-3xl font-bold text-blue-600 mt-2">
+                            <h2 class="text-4xl font-bold text-green-600 mt-2">
 
-                                {{ $jadwalHariIni ? $jadwalHariIni->tanggal : '-' }}
+                                {{ $hadir }}
 
                             </h2>
 
                         </div>
 
-                        <div class="bg-blue-100 rounded-full p-3">
-
-                            <x-heroicon-o-calendar-days class="w-8 h-8 text-blue-600" />
-
-                        </div>
+                        <x-heroicon-o-check-circle class="w-14 h-14 text-green-500" />
 
                     </div>
 
                 </div>
 
-                {{-- Status --}}
-                <div class="bg-white rounded-xl shadow p-6">
+                {{-- Tidak Hadir --}}
+                <div class="bg-white rounded-xl shadow-lg border-l-4 border-red-500 p-6">
 
                     <div class="flex justify-between items-center">
 
@@ -92,47 +72,46 @@
 
                             <p class="text-gray-500 text-sm">
 
-                                Status Hari Ini
+                                Tidak Hadir
 
                             </p>
 
-                            @if($jadwalHariIni)
+                            <h2 class="text-4xl font-bold text-red-500 mt-2">
 
-                            @if($sudahAbsen)
-
-                            <h2 class="text-3xl font-bold text-green-600 mt-2">
-
-                                Sudah Absen
+                                {{ $tidakHadir }}
 
                             </h2>
-
-                            @else
-
-                            <h2 class="text-3xl font-bold text-red-500 mt-2">
-
-                                Belum Absen
-
-                            </h2>
-
-                            @endif
-
-                            @else
-
-                            <h2 class="text-3xl font-bold text-gray-500 mt-2">
-
-                                Libur
-
-                            </h2>
-
-                            @endif
 
                         </div>
 
-                        <div class="bg-green-100 rounded-full p-3">
+                        <x-heroicon-o-x-circle class="w-14 h-14 text-red-500" />
 
-                            <x-heroicon-o-check-badge class="w-8 h-8 text-green-600" />
+                    </div>
+
+                </div>
+
+                {{-- Jadwal --}}
+                <div class="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <div>
+
+                            <p class="text-gray-500 text-sm">
+
+                                Total Jadwal
+
+                            </p>
+
+                            <h2 class="text-4xl font-bold text-blue-600 mt-2">
+
+                                {{ $jumlahJadwal }}
+
+                            </h2>
 
                         </div>
+
+                        <x-heroicon-o-calendar-days class="w-14 h-14 text-blue-500" />
 
                     </div>
 
@@ -141,9 +120,9 @@
             </div>
 
             {{-- Jadwal Hari Ini --}}
-            <div class="bg-white rounded-xl shadow p-6 mb-6">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
 
-                <h3 class="text-xl font-semibold text-gray-700 mb-5">
+                <h3 class="text-xl font-bold text-gray-700 mb-5">
 
                     Jadwal Hari Ini
 
@@ -151,7 +130,7 @@
 
                 @if($jadwalHariIni)
 
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="flex items-center justify-between">
 
                     <div>
 
@@ -161,7 +140,7 @@
 
                         </p>
 
-                        <h4 class="font-bold text-lg mt-1">
+                        <h4 class="text-lg font-semibold">
 
                             {{ \Carbon\Carbon::parse($jadwalHariIni->tanggal)->translatedFormat('d F Y') }}
 
@@ -169,66 +148,17 @@
 
                     </div>
 
-                    <div>
+                    <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
 
-                        <p class="text-gray-500">
+                        Ada Jadwal
 
-                            Status
-
-                        </p>
-
-                        @if($sudahAbsen)
-
-                        <span class="inline-block mt-2 px-4 py-2 rounded-full bg-green-100 text-green-700">
-
-                            Sudah Absen
-
-                        </span>
-
-                        @else
-
-                        <span class="inline-block mt-2 px-4 py-2 rounded-full bg-red-100 text-red-700">
-
-                            Belum Absen
-
-                        </span>
-
-                        @endif
-
-                    </div>
-
-                </div>
-
-                <div class="mt-6">
-
-                    @if(!$sudahAbsen)
-
-                    <a href="{{ route('absensi.index') }}"
-                        class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition">
-
-                        <x-heroicon-o-check-circle class="w-5 h-5 mr-2" />
-
-                        Absen Sekarang
-
-                    </a>
-
-                    @else
-
-                    <button
-                        disabled
-                        class="bg-green-600 text-white px-6 py-3 rounded-lg cursor-not-allowed">
-
-                        ✔ Sudah Absen
-
-                    </button>
-
-                    @endif
+                    </span>
 
                 </div>
 
                 @else
 
-                <div class="text-center py-8 text-gray-500">
+                <div class="bg-yellow-100 text-yellow-700 rounded-lg p-4">
 
                     Tidak ada jadwal ronda hari ini.
 
@@ -237,155 +167,92 @@
                 @endif
 
             </div>
-            {{-- Riwayat & Statistik --}}
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                {{-- Riwayat Absensi --}}
-                <div class="lg:col-span-2 bg-white rounded-xl shadow p-6">
+                {{-- Grafik --}}
+                <div class="bg-white rounded-xl shadow-lg p-6">
 
-                    <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-lg font-bold text-gray-700 mb-4">
 
-                        <h3 class="text-xl font-semibold text-gray-700">
+                        Statistik Absensi
 
-                            Riwayat Absensi Terakhir
+                    </h3>
 
-                        </h3>
+                    <div class="h-64">
 
-                    </div>
-
-                    <div class="overflow-x-auto">
-
-                        <table class="min-w-full">
-
-                            <thead class="border-b">
-
-                                <tr>
-
-                                    <th class="text-left py-3 text-gray-500">
-
-                                        Tanggal
-
-                                    </th>
-
-                                    <th class="text-center py-3 text-gray-500">
-
-                                        Status
-
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                @forelse($riwayat as $item)
-
-                                <tr class="border-b hover:bg-gray-50">
-
-                                    <td class="py-4">
-
-                                        {{ \Carbon\Carbon::parse($item->jadwal->tanggal)->translatedFormat('d F Y') }}
-
-                                    </td>
-
-                                    <td class="py-4 text-center">
-
-                                        @if($item->status == 'hadir')
-
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-
-                                            Hadir
-
-                                        </span>
-
-                                        @else
-
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
-
-                                            Tidak Hadir
-
-                                        </span>
-
-                                        @endif
-
-                                    </td>
-
-                                </tr>
-
-                                @empty
-
-                                <tr>
-
-                                    <td colspan="2"
-                                        class="text-center py-8 text-gray-500">
-
-                                        Belum ada riwayat absensi.
-
-                                    </td>
-
-                                </tr>
-
-                                @endforelse
-
-                            </tbody>
-
-                        </table>
+                        <canvas id="chartAbsensiPetugas"></canvas>
 
                     </div>
 
                 </div>
 
-                {{-- Statistik --}}
-                <div class="space-y-6">
+                {{-- Riwayat --}}
+                <div class="bg-white rounded-xl shadow-lg p-6">
 
-                    <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex justify-between items-center mb-4">
 
-                        <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-700">
 
-                            <div>
+                            Riwayat Terbaru
 
-                                <p class="text-gray-500 text-sm">
+                        </h3>
 
-                                    Total Absensi
+                        <a href="{{ route('petugas.riwayat') }}"
+                            class="text-blue-600 hover:text-blue-700 text-sm font-semibold">
 
-                                </p>
+                            Lihat Semua →
 
-                                <h2 class="text-4xl font-bold text-blue-600 mt-2">
+                        </a>
 
-                                    {{ $totalAbsensi }}
+                    </div>
 
-                                </h2>
+                    @forelse($riwayat as $item)
 
-                            </div>
+                    <div class="flex justify-between items-center border-b py-3">
 
-                            <div class="bg-blue-100 rounded-full p-3">
+                        <div>
 
-                                <x-heroicon-o-clipboard-document-check
-                                    class="w-8 h-8 text-blue-600" />
+                            <p class="font-semibold">
 
-                            </div>
+                                {{ \Carbon\Carbon::parse($item->jadwal->tanggal)->translatedFormat('d F Y') }}
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            @if($item->status == 'hadir')
+
+                            <span class="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm">
+
+                                Hadir
+
+                            </span>
+
+                            @else
+
+                            <span class="bg-red-100 text-red-700 px-4 py-1 rounded-full text-sm">
+
+                                Tidak Hadir
+
+                            </span>
+
+                            @endif
 
                         </div>
 
                     </div>
 
-                    <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl shadow p-6 text-white">
+                    @empty
 
-                        <h3 class="text-lg font-bold mb-2">
+                    <div class="text-center text-gray-500 py-10">
 
-                            Semangat Bertugas 💪
-
-                        </h3>
-
-                        <p class="text-blue-100 text-sm leading-relaxed">
-
-                            Terima kasih telah membantu menjaga keamanan lingkungan.
-                            Pastikan selalu melakukan absensi sesuai jadwal ronda.
-
-                        </p>
+                        Belum ada riwayat absensi.
 
                     </div>
+
+                    @endforelse
 
                 </div>
 
@@ -394,5 +261,13 @@
         </div>
 
     </div>
+    @push('scripts')
 
+    <script>
+        window.petugasLabels = @json($labels);
+        window.petugasData = @json($data);
+    </script>
+
+  
+    @endpush
 </x-app-layout>

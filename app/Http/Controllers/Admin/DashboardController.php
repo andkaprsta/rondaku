@@ -7,6 +7,7 @@ use App\Models\Absensi;
 use App\Models\Jadwal;
 use App\Models\User;
 use App\Models\Warga;
+use App\Models\ActivityLog;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -21,15 +22,12 @@ class DashboardController extends Controller
 
         $jumlahPetugas = User::where('role', 'petugas')->count();
 
-        $jadwalHariIni = Jadwal::whereDate(
-            'tanggal',
-            Carbon::today()
-        )->count();
+        $jumlahJadwal = Jadwal::count();
 
-        $absensiHariIni = Absensi::whereDate(
-            'created_at',
-            Carbon::today()
-        )->count();
+        $jumlahAbsensi = Absensi::count();
+        $jadwalHariIni = Jadwal::whereDate('tanggal', today())->count();
+
+        $absensiHariIni = Absensi::whereDate('created_at', today())->count();
 
         // =========================
         // Grafik 7 Hari Terakhir
@@ -62,6 +60,16 @@ class DashboardController extends Controller
 
             ->get();
 
+        $activities = ActivityLog::with('user')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        $recentAbsensi = Absensi::with('jadwal.petugas')
+            ->latest()
+            ->take(5)
+            ->get();
+
         return view('admin.dashboard', compact(
 
             'jumlahWarga',
@@ -76,7 +84,10 @@ class DashboardController extends Controller
 
             'data',
 
-            'absensiTerbaru'
+            'absensiTerbaru',
+
+            'activities',
+            'recentAbsensi'
 
         ));
     }

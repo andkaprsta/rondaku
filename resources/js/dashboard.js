@@ -2,9 +2,9 @@ import Chart from "chart.js/auto";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const chartCanvas = document.getElementById("absensiChart");
+    const chartCanvas = document.getElementById("dashboardChart");
 
-    if (!chartCanvas || typeof dashboardChartData === "undefined") {
+    if (!chartCanvas || !window.dashboardChartData) {
         return;
     }
 
@@ -14,16 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         data: {
 
-           labels: dashboardChartData.labels,
-            data: dashboardChartData.data,
-            
+            labels: window.dashboardChartData.labels,
+
             datasets: [{
-                label: "Absensi",
-                data: dashboardChartData.data,
+
+                label: "Jumlah Absensi",
+
+                data: window.dashboardChartData.data,
+
                 backgroundColor: "#3B82F6",
+
                 borderRadius: 8,
+
                 borderSkipped: false,
+
                 maxBarThickness: 40
+
             }]
 
         },
@@ -37,7 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
             plugins: {
 
                 legend: {
+
                     display: false
+
                 }
 
             },
@@ -49,12 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     beginAtZero: true,
 
                     ticks: {
-                        precision: 0,
-                        stepSize: 1
-                    },
 
-                    grid: {
-                        color: "#F3F4F6"
+                        precision: 0,
+
+                        stepSize: 1
+
                     }
 
                 },
@@ -62,7 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 x: {
 
                     grid: {
+
                         display: false
+
                     }
 
                 }

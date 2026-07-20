@@ -14,26 +14,20 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Jadwal hari ini milik petugas
+        $hadir = Absensi::whereHas('jadwal', function ($q) use ($user) {
+            $q->where('petugas_id', $user->id);
+        })->where('status', 'hadir')->count();
+
+        $tidakHadir = Absensi::whereHas('jadwal', function ($q) use ($user) {
+            $q->where('petugas_id', $user->id);
+        })->where('status', 'tidak_hadir')->count();
+
+        $jumlahJadwal = Jadwal::where('petugas_id', $user->id)->count();
+
         $jadwalHariIni = Jadwal::where('petugas_id', $user->id)
             ->whereDate('tanggal', Carbon::today())
             ->first();
 
-        // Sudah absen atau belum
-        $sudahAbsen = false;
-
-        if ($jadwalHariIni) {
-
-            $sudahAbsen = Absensi::where('jadwal_id', $jadwalHariIni->id)
-                ->exists();
-        }
-
-        // Total absensi petugas
-        $totalAbsensi = Absensi::whereHas('jadwal', function ($q) use ($user) {
-            $q->where('petugas_id', $user->id);
-        })->count();
-
-        // Riwayat 5 absensi terakhir
         $riwayat = Absensi::with('jadwal')
             ->whereHas('jadwal', function ($q) use ($user) {
                 $q->where('petugas_id', $user->id);
@@ -42,11 +36,32 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        // Data grafik 6 bulan terakhir
+        $labels = [];
+        $data = [];
+
+        for ($i = 5; $i >= 0; $i--) {
+
+            $bulan = Carbon::now()->subMonths($i);
+
+            $labels[] = $bulan->translatedFormat('M');
+
+            $data[] = Absensi::whereHas('jadwal', function ($q) use ($bulan, $user) {
+
+                $q->where('petugas_id', $user->id)
+                    ->whereMonth('tanggal', $bulan->month)
+                    ->whereYear('tanggal', $bulan->year);
+            })->count();
+        }
+
         return view('petugas.dashboard', compact(
+            'hadir',
+            'tidakHadir',
+            'jumlahJadwal',
             'jadwalHariIni',
-            'sudahAbsen',
-            'totalAbsensi',
-            'riwayat'
+            'riwayat',
+            'labels',
+            'data'
         ));
     }
 }
