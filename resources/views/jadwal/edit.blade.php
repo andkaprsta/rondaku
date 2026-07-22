@@ -22,9 +22,9 @@
 
     <div class="py-8">
 
-        <div class="max-w-3xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
 
                 <form action="{{ route('jadwal.update',$jadwal->id) }}" method="POST">
 
@@ -87,10 +87,10 @@
 
                     </div>
 
-                    <div class="flex justify-end gap-3">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3">
 
                         <a href="{{ route('jadwal.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg transition">
+                            class="bg-gray-500 hover:bg-gray-600 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
 
                             Batal
 
@@ -98,7 +98,7 @@
 
                         <button
                             type="submit"
-                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded-lg transition">
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
 
                             Update Jadwal
 

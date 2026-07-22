@@ -1,9 +1,8 @@
-
 <x-app-layout>
 
     <x-slot name="header">
 
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
             <div>
 
@@ -22,7 +21,7 @@
             </div>
 
             <a href="{{ route('jadwal.create') }}"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow">
+                class="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-5 py-3 rounded-lg shadow">
 
                 + Tambah Jadwal
 
@@ -34,7 +33,7 @@
 
     <div class="py-8">
 
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(session('success'))
 
@@ -47,7 +46,7 @@
             @endif
 
             {{-- Search --}}
-            <div class="flex justify-end items-center gap-2 mb-5">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-5">
 
                 <form action="{{ route('jadwal.index') }}" method="GET">
 
@@ -58,7 +57,7 @@
                             name="keyword"
                             value="{{ request('keyword') }}"
                             placeholder="Cari petugas..."
-                            class="w-72 pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+                            class="w-full sm:w-72 pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
 
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"

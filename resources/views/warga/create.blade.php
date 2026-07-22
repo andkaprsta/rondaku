@@ -22,9 +22,9 @@
 
     <div class="py-8">
 
-        <div class="max-w-3xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
 
                 <form action="{{ route('warga.store') }}"
                     method="POST">
@@ -111,17 +111,17 @@
 
                     </div>
 
-                    <div class="flex justify-end gap-3">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3">
 
                         <a href="{{ route('warga.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
+                            class="w-full sm:w-auto text-center bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
 
                             Batal
 
                         </a>
 
                         <button
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
+                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
 
                             Simpan
 

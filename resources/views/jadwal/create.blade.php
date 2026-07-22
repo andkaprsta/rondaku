@@ -22,9 +22,9 @@
 
     <div class="py-8">
 
-        <div class="max-w-3xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
 
                 <form action="{{ route('jadwal.store') }}" method="POST">
 
@@ -41,9 +41,8 @@
                         <input
                             type="date"
                             name="tanggal"
-                            value="{{ old('tanggal') }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-
+                            value="{{ old('tanggal',$tanggal) }}"
+                            class="w-full rounded-lg border-gray-300">
                         @error('tanggal')
                         <p class="text-red-500 text-sm mt-2">
                             {{ $message }}
@@ -92,10 +91,10 @@
 
                     </div>
 
-                    <div class="flex justify-end gap-3">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3">
 
                         <a href="{{ route('jadwal.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg transition">
+                            class="bg-gray-500 hover:bg-gray-600 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
 
                             Batal
 
@@ -103,7 +102,7 @@
 
                         <button
                             type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg transition">
+                            class="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
 
                             Simpan Jadwal
 

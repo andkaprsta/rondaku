@@ -83,6 +83,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/absensi/pdf', [AdminAbsensiController::class, 'exportPdf'])
         ->name('admin.absensi.pdf');
+
+    Route::get('/admin/kalender', [JadwalController::class, 'calendar'])
+        ->name('jadwal.calendar');
+
+    Route::get('/admin/kalender/events', [JadwalController::class, 'events'])
+        ->name('jadwal.events');
+
+    Route::get('/admin/kalender/event/{id}', [JadwalController::class, 'event'])
+        ->name('jadwal.event');
+
+    Route::delete('/admin/kalender/event/{id}', [JadwalController::class, 'destroyEvent'])
+        ->name('jadwal.event.destroy');
 });
 
 /*

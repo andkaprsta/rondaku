@@ -12,12 +12,12 @@
 
     <div class="py-8">
 
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             {{-- Welcome Card --}}
-            <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl shadow-lg p-8 text-white mb-8">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl shadow-lg p-5 md:p-8 text-white mb-8 hover:shadow-xl transition-all duration-300">
 
-                <h1 class="text-3xl font-bold">
+                <h1 class="text-2xl md:text-3xl font-bold">
 
                     Halo, {{ Auth::user()->name }} 👋
 
@@ -37,7 +37,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
                 {{-- Hadir --}}
-                <div class="bg-white rounded-xl shadow-lg border-l-4 border-green-500 p-6">
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 border-l-4 border-green-500 p-6">
 
                     <div class="flex justify-between items-center">
 
@@ -49,7 +49,7 @@
 
                             </p>
 
-                            <h2 class="text-4xl font-bold text-green-600 mt-2">
+                            <h2 class="text-3xl md:text-4xl font-bold text-green-600 mt-2">
 
                                 {{ $hadir }}
 
@@ -64,7 +64,7 @@
                 </div>
 
                 {{-- Tidak Hadir --}}
-                <div class="bg-white rounded-xl shadow-lg border-l-4 border-red-500 p-6">
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 border-l-4 border-red-500 p-6">
 
                     <div class="flex justify-between items-center">
 
@@ -76,7 +76,7 @@
 
                             </p>
 
-                            <h2 class="text-4xl font-bold text-red-500 mt-2">
+                            <h2 class="text-3xl md:text-4xl font-bold text-red-500 mt-2">
 
                                 {{ $tidakHadir }}
 
@@ -91,7 +91,7 @@
                 </div>
 
                 {{-- Jadwal --}}
-                <div class="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 border-l-4 border-blue-500 p-6">
 
                     <div class="flex justify-between items-center">
 
@@ -103,7 +103,7 @@
 
                             </p>
 
-                            <h2 class="text-4xl font-bold text-blue-600 mt-2">
+                            <h2 class="text-3xl md:text-4xl font-bold text-blue-600 mt-2">
 
                                 {{ $jumlahJadwal }}
 
@@ -130,7 +130,7 @@
 
                 @if($jadwalHariIni)
 
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
                     <div>
 
@@ -148,7 +148,7 @@
 
                     </div>
 
-                    <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
+                    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
 
                         Ada Jadwal
 
@@ -189,7 +189,7 @@
                 {{-- Riwayat --}}
                 <div class="bg-white rounded-xl shadow-lg p-6">
 
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
 
                         <h3 class="text-lg font-bold text-gray-700">
 
@@ -198,7 +198,7 @@
                         </h3>
 
                         <a href="{{ route('petugas.riwayat') }}"
-                            class="text-blue-600 hover:text-blue-700 text-sm font-semibold">
+                            class="text-sm text-blue-600 hover:text-blue-700 font-semibold self-start sm:self-auto">
 
                             Lihat Semua →
 
@@ -208,7 +208,7 @@
 
                     @forelse($riwayat as $item)
 
-                    <div class="flex justify-between items-center border-b py-3">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-b py-3">
 
                         <div>
 
@@ -268,6 +268,6 @@
         window.petugasData = @json($data);
     </script>
 
-  
+
     @endpush
 </x-app-layout>

@@ -1,4 +1,3 @@
-
 <x-app-layout>
 
     <x-slot name="header">
@@ -13,9 +12,9 @@
 
     <div class="py-8">
 
-        <div class="max-w-3xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
 
                 @if ($errors->any())
 
@@ -112,17 +111,17 @@
 
                     </div>
 
-                    <div class="flex gap-3">
+                    <div class="flex flex-col sm:flex-row gap-3">
 
                         <button
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+                            class="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-6 py-3 rounded-lg">
 
                             Simpan
 
                         </button>
 
                         <a href="{{ route('user.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg">
+                            class="bg-gray-500 hover:bg-gray-600 text-white w-full sm:w-auto px-6 py-3 rounded-lg">
 
                             Kembali
 

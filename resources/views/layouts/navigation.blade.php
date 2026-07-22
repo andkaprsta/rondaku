@@ -54,6 +54,10 @@
 
                     </x-nav-link>
 
+                    <x-nav-link :href="route('jadwal.calendar')" :active="request()->routeIs('jadwal.calendar')">
+                        Kalender Jadwal
+                    </x-nav-link>
+
                     <x-nav-link :href="route('admin.absensi')"
                         :active="request()->routeIs('admin.absensi')">
 
