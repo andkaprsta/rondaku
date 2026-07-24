@@ -2,7 +2,7 @@
 
     <x-slot name="header">
 
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
 
             <div>
 
@@ -26,7 +26,7 @@
 
     <div class="py-8">
 
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(session('success'))
 
@@ -40,7 +40,7 @@
 
             <div class="bg-white rounded-xl shadow-lg">
 
-                <div class="p-6 border-b">
+                <div class="p-5 md:p-6 border-b">
 
                     <h3 class="text-lg font-bold text-gray-700">
 
@@ -66,25 +66,25 @@
 
                 <div class="overflow-x-auto">
 
-                    <table class="min-w-full">
+                    <table class="min-w-full text-sm md:text-base">
 
                         <thead class="bg-gray-100">
 
                             <tr>
 
-                                <th class="px-6 py-4 text-left">
+                                <th class="px-4 md:px-6 py-3 md:py-4 text-left">
 
                                     No
 
                                 </th>
 
-                                <th class="px-6 py-4 text-left">
+                                <th class="px-4 md:px-6 py-3 md:py-4 text-left">
 
                                     Tanggal
 
                                 </th>
 
-                                <th class="px-6 py-4 text-center">
+                                <th class="px-4 md:px-6 py-3 md:py-4 text-center">
 
                                     Status
 
@@ -100,19 +100,19 @@
 
                             <tr class="border-b hover:bg-gray-50">
 
-                                <td class="px-6 py-4">
+                                <td class="px-4 md:px-6 py-3 md:py-4">
 
                                     {{ $riwayat->firstItem() + $loop->index }}
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-4 md:px-6 py-3 md:py-4">
 
                                     {{ \Carbon\Carbon::parse($item->jadwal->tanggal)->translatedFormat('d F Y') }}
 
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-4 md:px-6 py-3 md:py-4 text-center">
 
                                     @if($item->status == 'hadir')
 

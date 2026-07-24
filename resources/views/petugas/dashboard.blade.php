@@ -34,7 +34,7 @@
             </div>
 
             {{-- Statistik --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
 
                 {{-- Hadir --}}
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 border-l-4 border-green-500 p-6">

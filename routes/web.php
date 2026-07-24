@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LandingController;
 
 // Admin
 use App\Http\Controllers\Admin\WargaController;
@@ -21,9 +22,7 @@ use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardControll
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 /*
 |--------------------------------------------------------------------------

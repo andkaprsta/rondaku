@@ -6,7 +6,7 @@
 
             <form action="{{ route('admin.absensi') }}"
                 method="GET"
-                class="flex flex-wrap items-end gap-4">
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
 
                 {{-- Tanggal Awal --}}
                 <div>
@@ -80,7 +80,7 @@
                 {{-- Filter --}}
                 <button
                     type="submit"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
 
                     Filter
 
@@ -88,7 +88,7 @@
 
                 {{-- Reset --}}
                 <a href="{{ route('admin.absensi') }}"
-                    class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
+                    class="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
 
                     Reset
 
@@ -98,7 +98,7 @@
                 <a
                     href="{{ route('admin.absensi.pdf', request()->query()) }}"
                     target="_blank"
-                    class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg ml-auto">
+                    class="w-full lg:w-auto bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg lg:ml-auto">
 
                     Export PDF
 
@@ -112,7 +112,7 @@
 
     <div class="py-8">
 
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(session('success'))
 
@@ -129,14 +129,14 @@
 
                 <form action="{{ route('admin.absensi') }}"
                     method="GET"
-                    class="flex flex-wrap gap-3 items-center">
+                    class="flex flex-col sm:flex-row gap-3 sm:items-center">
 
                     <input
                         type="text"
                         name="keyword"
                         value="{{ request('keyword') }}"
                         placeholder="Cari nama petugas..."
-                        class="w-72 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        class="w-full sm:w-72 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
 
                     <select
                         name="status"

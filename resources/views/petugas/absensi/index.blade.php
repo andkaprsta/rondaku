@@ -12,7 +12,7 @@
 
     <div class="py-8">
 
-        <div class="max-w-3xl mx-auto px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
             {{-- Alert --}}
             @if(session('success'))
@@ -35,7 +35,7 @@
 
             @endif
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
 
                 @if($jadwal)
 
@@ -49,7 +49,7 @@
 
                     <div class="space-y-3">
 
-                        <div class="flex justify-between border-b pb-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2 border-b pb-2">
 
                             <span class="text-gray-500">
 
@@ -65,7 +65,7 @@
 
                         </div>
 
-                        <div class="flex justify-between border-b pb-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2 border-b pb-2">
 
                             <span class="text-gray-500">
 
@@ -81,7 +81,7 @@
 
                         </div>
 
-                        <div class="flex justify-between">
+                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
 
                             <span class="text-gray-500">
 
@@ -123,7 +123,7 @@
 
                         <button
                             type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
 
                             ✔ Absen Sekarang
 
@@ -135,7 +135,7 @@
 
                     <button
                         disabled
-                        class="bg-green-600 text-white px-8 py-3 rounded-lg cursor-not-allowed">
+                        class="w-full sm:w-auto bg-green-600 text-white px-8 py-3 rounded-lg cursor-not-allowed">
 
                         ✔ Anda Sudah Absen Hari Ini
 

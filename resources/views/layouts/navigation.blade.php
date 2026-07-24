@@ -224,11 +224,12 @@
 
         </x-responsive-nav-link>
 
-        <x-responsive-nav-link
-            :href="route('jadwal.index')">
-
+        <x-responsive-nav-link :href="route('jadwal.index')">
             Jadwal
+        </x-responsive-nav-link>
 
+        <x-responsive-nav-link :href="route('jadwal.calendar')">
+            Kalender Jadwal
         </x-responsive-nav-link>
 
         <x-responsive-nav-link
@@ -247,11 +248,12 @@
 
         </x-responsive-nav-link>
 
-        <x-responsive-nav-link
-            :href="route('absensi.index')">
-
+        <x-responsive-nav-link :href="route('absensi.index')">
             Absensi
+        </x-responsive-nav-link>
 
+        <x-responsive-nav-link :href="route('petugas.riwayat')">
+            Riwayat Absensi
         </x-responsive-nav-link>
 
         @endif
