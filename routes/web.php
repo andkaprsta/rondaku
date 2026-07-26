@@ -66,6 +66,11 @@ Route::middleware('auth')->group(function () {
 | Admin
 |--------------------------------------------------------------------------
 */
+Route::get(
+    '/admin/absensi/export-excel',
+    [AdminAbsensiController::class, 'exportExcel']
+)->name('admin.absensi.export.excel');
+
 Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])

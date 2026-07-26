@@ -39,7 +39,13 @@
 
             @endif
 
-            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
+            @php
+            $sekarang = \Carbon\Carbon::now('Asia/Jakarta');
+
+            $bolehAbsen = ($sekarang->hour >= 22 || $sekarang->hour < 4);
+                @endphp
+
+                <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
 
                 @if($jadwal)
 
@@ -122,7 +128,7 @@
 
                 <div class="text-center">
 
-                    @if(!$sudahAbsen)
+                    @if(!$sudahAbsen && $bolehAbsen)
 
                     <form action="{{ route('absensi.store') }}" method="POST">
 
@@ -133,11 +139,24 @@
                             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-3 rounded-lg text-sm font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
 
                             <x-heroicon-o-check class="w-5 h-5" />
+
                             Absen Sekarang
 
                         </button>
 
                     </form>
+
+                    @elseif(!$bolehAbsen)
+
+                    <button
+                        disabled
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gray-400 text-white px-8 py-3 rounded-lg text-sm font-semibold cursor-not-allowed">
+
+                        <x-heroicon-o-lock-closed class="w-5 h-5" />
+
+                        Absensi Dibuka Pukul 22.00 - 04.00 WIB
+
+                    </button>
 
                     @else
 
@@ -146,6 +165,7 @@
                         class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-lg text-sm font-semibold cursor-not-allowed opacity-90">
 
                         <x-heroicon-o-check-circle class="w-5 h-5" />
+
                         Anda Sudah Absen Hari Ini
 
                     </button>
@@ -153,7 +173,7 @@
                     @endif
 
                 </div>
-
+                
                 @else
 
                 <div class="text-center py-10">
@@ -182,9 +202,9 @@
 
                 @endif
 
-            </div>
-
         </div>
+
+    </div>
 
     </div>
 
