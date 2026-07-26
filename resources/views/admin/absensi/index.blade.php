@@ -2,107 +2,125 @@
 
     <x-slot name="header">
 
-        <div class="bg-white rounded-xl shadow p-5 mb-6">
+        <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-5">
 
             <form action="{{ route('admin.absensi') }}"
                 method="GET"
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
+                class="flex flex-col gap-4 lg:flex-row lg:items-end lg:flex-wrap">
 
-                {{-- Tanggal Awal --}}
-                <div>
+                {{-- Grup Filter Tanggal & Status --}}
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1 min-w-0">
 
-                    <label class="block text-sm text-gray-600 mb-1">
+                    {{-- Tanggal Awal --}}
+                    <div class="min-w-0">
 
-                        Dari
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
-                    </label>
+                            Dari
 
-                    <input
-                        type="date"
-                        name="tanggal_awal"
-                        value="{{ request('tanggal_awal') }}"
-                        class="border border-gray-300 rounded-lg px-3 py-2">
+                        </label>
+
+                        <input
+                            type="date"
+                            name="tanggal_awal"
+                            value="{{ request('tanggal_awal') }}"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
+
+                    </div>
+
+                    {{-- Tanggal Akhir --}}
+                    <div class="min-w-0">
+
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+
+                            Sampai
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="tanggal_akhir"
+                            value="{{ request('tanggal_akhir') }}"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
+
+                    </div>
+
+                    {{-- Status --}}
+                    <div class="min-w-0">
+
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            name="status"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
+
+                            <option value="">Semua</option>
+
+                            <option
+                                value="hadir"
+                                {{ request('status')=='hadir' ? 'selected' : '' }}>
+
+                                Hadir
+
+                            </option>
+
+                            <option
+                                value="tidak hadir"
+                                {{ request('status')=='tidak hadir' ? 'selected' : '' }}>
+
+                                Tidak Hadir
+
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
-                {{-- Tanggal Akhir --}}
-                <div>
+                {{-- Grup Tombol Aksi --}}
+                <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 shrink-0">
 
-                    <label class="block text-sm text-gray-600 mb-1">
+                    {{-- Filter --}}
+                    <button
+                        type="submit"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap">
 
-                        Sampai
+                        <x-heroicon-o-funnel class="w-4 h-4" />
+                        Filter
 
-                    </label>
+                    </button>
 
-                    <input
-                        type="date"
-                        name="tanggal_akhir"
-                        value="{{ request('tanggal_akhir') }}"
-                        class="border border-gray-300 rounded-lg px-3 py-2">
+                    {{-- Reset --}}
+                    <a href="{{ route('admin.absensi') }}"
+                        class="w-full sm:w-auto text-center bg-white text-gray-700 border border-[#E5E7EB] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#F8FAFC] transition-all duration-300 whitespace-nowrap">
 
-                </div>
+                        Reset
 
-                {{-- Status --}}
-                <div>
+                    </a>
 
-                    <label class="block text-sm text-gray-600 mb-1">
+                    {{-- Export PDF --}}
+                    <a
+                        href="{{ route('admin.absensi.pdf', request()->query()) }}"
+                        target="_blank"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap">
 
-                        Status
+                        <x-heroicon-o-document-arrow-down class="w-4 h-4" />
+                        Export PDF
 
-                    </label>
-
-                    <select
-                        name="status"
-                        class="border border-gray-300 rounded-lg px-3 py-2">
-
-                        <option value="">Semua</option>
-
-                        <option
-                            value="hadir"
-                            {{ request('status')=='hadir' ? 'selected' : '' }}>
-
-                            Hadir
-
-                        </option>
-
-                        <option
-                            value="tidak hadir"
-                            {{ request('status')=='tidak hadir' ? 'selected' : '' }}>
-
-                            Tidak Hadir
-
-                        </option>
-
-                    </select>
+                    </a>
 
                 </div>
-
-                {{-- Filter --}}
-                <button
-                    type="submit"
-                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
-
-                    Filter
-
-                </button>
-
-                {{-- Reset --}}
-                <a href="{{ route('admin.absensi') }}"
-                    class="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
-
-                    Reset
-
-                </a>
-
-                {{-- Export PDF --}}
-                <a
-                    href="{{ route('admin.absensi.pdf', request()->query()) }}"
-                    target="_blank"
-                    class="w-full lg:w-auto bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg lg:ml-auto">
-
-                    Export PDF
-
-                </a>
 
             </form>
 
@@ -110,13 +128,15 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(session('success'))
 
-            <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 px-5 py-4">
+            <div class="mb-5 flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 px-5 py-4 text-sm font-medium">
+
+                <x-heroicon-o-check-circle class="w-5 h-5 shrink-0" />
 
                 {{ session('success') }}
 
@@ -125,22 +145,32 @@
             @endif
 
             {{-- Search + Filter --}}
-            <div class="bg-white rounded-xl shadow p-5 mb-5">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-5 mb-5">
 
                 <form action="{{ route('admin.absensi') }}"
                     method="GET"
-                    class="flex flex-col sm:flex-row gap-3 sm:items-center">
+                    class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:items-center">
 
-                    <input
-                        type="text"
-                        name="keyword"
-                        value="{{ request('keyword') }}"
-                        placeholder="Cari nama petugas..."
-                        class="w-full sm:w-72 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <div class="relative w-full sm:w-72">
+
+                        <x-heroicon-o-magnifying-glass class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+
+                        <input
+                            type="text"
+                            name="keyword"
+                            value="{{ request('keyword') }}"
+                            placeholder="Cari nama petugas..."
+                            class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#E5E7EB] text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
+
+                    </div>
 
                     <select
                         name="status"
-                        class="border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500">
+                        class="w-full sm:w-auto rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                               focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                               transition-colors duration-200">
 
                         <option value="">
 
@@ -167,8 +197,10 @@
                     </select>
 
                     <button
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg">
+                        type="submit"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap">
 
+                        <x-heroicon-o-magnifying-glass class="w-4 h-4" />
                         Cari
 
                     </button>
@@ -176,7 +208,7 @@
                     @if(request()->filled('keyword') || request()->filled('status'))
 
                     <a href="{{ route('admin.absensi') }}"
-                        class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2.5 rounded-lg">
+                        class="w-full sm:w-auto text-center bg-white text-gray-700 border border-[#E5E7EB] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#F8FAFC] transition-all duration-300 whitespace-nowrap">
 
                         Reset
 
@@ -188,26 +220,24 @@
 
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm">
 
-                <div class="p-6 border-b">
+                <div class="p-5 sm:p-6 border-b border-[#E5E7EB]">
 
-                    <h3 class="text-lg font-bold text-gray-700">
+                    <h3 class="text-lg font-bold text-gray-900">
 
                         Daftar Absensi
 
                     </h3>
 
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-[#6B7280] mt-1">
 
                         Total :
-
-                        <span class="font-bold text-blue-600">
+                        <span class="font-bold text-[#2563EB]">
 
                             {{ $absensi->total() }}
 
                         </span>
-
                         Data
 
                     </p>
@@ -216,31 +246,31 @@
 
                 <div class="overflow-x-auto">
 
-                    <table class="min-w-full">
+                    <table class="min-w-full w-max sm:w-full text-sm">
 
-                        <thead class="bg-gray-100">
+                        <thead class="bg-[#F8FAFC] sticky top-0">
 
-                            <tr>
+                            <tr class="border-b border-[#E5E7EB]">
 
-                                <th class="px-6 py-4 text-left">
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     No
 
                                 </th>
 
-                                <th class="px-6 py-4 text-left">
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     Nama Petugas
 
                                 </th>
 
-                                <th class="px-6 py-4 text-left">
+                                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     Tanggal
 
                                 </th>
 
-                                <th class="px-6 py-4 text-center">
+                                <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     Status
 
@@ -250,41 +280,41 @@
 
                         </thead>
 
-                        <tbody>
+                        <tbody class="divide-y divide-[#E5E7EB]">
 
                             @forelse($absensi as $item)
 
-                            <tr class="border-b hover:bg-gray-50">
+                            <tr class="odd:bg-white even:bg-[#F8FAFC] hover:bg-blue-50/60 transition-colors duration-200">
 
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
 
                                     {{ $absensi->firstItem() + $loop->index }}
 
                                 </td>
 
-                                <td class="px-6 py-4 font-medium">
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
 
                                     {{ $item->jadwal->petugas->name }}
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
 
                                     {{ \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') }}
 
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 text-center whitespace-nowrap">
 
                                     @if($item->status == 'hadir')
 
-                                    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
+                                    <span class="inline-flex items-center bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
                                         Hadir
                                     </span>
 
                                     @else
 
-                                    <span class="bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold">
+                                    <span class="inline-flex items-center bg-rose-50 text-rose-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
                                         Tidak Hadir
                                     </span>
 
@@ -298,7 +328,7 @@
 
                             <tr>
 
-                                <td colspan="4" class="text-center py-10 text-gray-500">
+                                <td colspan="4" class="text-center py-10 text-[#6B7280]">
                                     Belum ada data absensi.
                                 </td>
 
@@ -311,7 +341,7 @@
 
                 </div>
 
-                <div class="p-5">
+                <div class="p-5 overflow-x-auto">
 
                     {{ $absensi->links() }}
 

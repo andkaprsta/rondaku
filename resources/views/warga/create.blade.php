@@ -4,13 +4,13 @@
 
         <div>
 
-            <h2 class="text-2xl font-bold text-gray-800">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">
 
                 Tambah Warga
 
             </h2>
 
-            <p class="text-gray-500 mt-1">
+            <p class="text-sm text-[#6B7280] mt-1">
 
                 Tambahkan data warga baru.
 
@@ -20,21 +20,22 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
 
                 <form action="{{ route('warga.store') }}"
-                    method="POST">
+                    method="POST"
+                    class="space-y-6">
 
                     @csrf
 
                     {{-- Nama --}}
-                    <div class="mb-5">
+                    <div>
 
-                        <label class="block font-semibold mb-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Nama
 
@@ -44,11 +45,13 @@
                             type="text"
                             name="nama"
                             value="{{ old('nama') }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
 
                         @error('nama')
 
-                        <p class="text-red-500 text-sm mt-1">
+                        <p class="mt-1.5 text-sm text-rose-600">
 
                             {{ $message }}
 
@@ -59,9 +62,9 @@
                     </div>
 
                     {{-- Alamat --}}
-                    <div class="mb-5">
+                    <div>
 
-                        <label class="block font-semibold mb-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Alamat
 
@@ -70,11 +73,13 @@
                         <textarea
                             name="alamat"
                             rows="4"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">{{ old('alamat') }}</textarea>
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900 min-h-[120px]
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">{{ old('alamat') }}</textarea>
 
                         @error('alamat')
 
-                        <p class="text-red-500 text-sm mt-1">
+                        <p class="mt-1.5 text-sm text-rose-600">
 
                             {{ $message }}
 
@@ -85,9 +90,9 @@
                     </div>
 
                     {{-- No HP --}}
-                    <div class="mb-8">
+                    <div>
 
-                        <label class="block font-semibold mb-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Nomor HP
 
@@ -97,11 +102,13 @@
                             type="text"
                             name="no_hp"
                             value="{{ old('no_hp') }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
 
                         @error('no_hp')
 
-                        <p class="text-red-500 text-sm mt-1">
+                        <p class="mt-1.5 text-sm text-rose-600">
 
                             {{ $message }}
 
@@ -111,18 +118,20 @@
 
                     </div>
 
-                    <div class="flex flex-col sm:flex-row justify-end gap-3">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-2">
 
                         <a href="{{ route('warga.index') }}"
-                            class="w-full sm:w-auto text-center bg-gray-500 hover:bg-gray-600 text-white px-5 py-3 rounded-lg">
+                            class="w-full sm:w-auto text-center bg-white text-gray-700 border border-[#E5E7EB] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#F8FAFC] transition-all duration-300">
 
                             Batal
 
                         </a>
 
                         <button
-                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
+                            type="submit"
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#2563EB] text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:bg-[#1D4ED8] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
 
+                            <x-heroicon-o-check class="w-5 h-5" />
                             Simpan
 
                         </button>

@@ -4,13 +4,13 @@
 
         <div>
 
-            <h2 class="text-2xl font-bold text-gray-800">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">
 
                 Edit Jadwal Ronda
 
             </h2>
 
-            <p class="text-gray-500 mt-1">
+            <p class="text-sm text-[#6B7280] mt-1">
 
                 Perbarui jadwal ronda.
 
@@ -20,20 +20,20 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
 
-                <form action="{{ route('jadwal.update',$jadwal->id) }}" method="POST">
+                <form action="{{ route('jadwal.update',$jadwal->id) }}" method="POST" class="space-y-6">
 
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-6">
+                    <div>
 
-                        <label class="block font-semibold text-gray-700 mb-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Tanggal Ronda
 
@@ -43,19 +43,21 @@
                             type="date"
                             name="tanggal"
                             value="{{ old('tanggal',$jadwal->tanggal) }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
 
                         @error('tanggal')
-                        <p class="text-red-500 text-sm mt-2">
+                        <p class="mt-1.5 text-sm text-rose-600">
                             {{ $message }}
                         </p>
                         @enderror
 
                     </div>
 
-                    <div class="mb-8">
+                    <div>
 
-                        <label class="block font-semibold text-gray-700 mb-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Petugas
 
@@ -63,7 +65,9 @@
 
                         <select
                             name="petugas_id"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200">
 
                             @foreach($petugas as $item)
 
@@ -80,17 +84,17 @@
                         </select>
 
                         @error('petugas_id')
-                        <p class="text-red-500 text-sm mt-2">
+                        <p class="mt-1.5 text-sm text-rose-600">
                             {{ $message }}
                         </p>
                         @enderror
 
                     </div>
 
-                    <div class="flex flex-col sm:flex-row justify-end gap-3">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-2">
 
                         <a href="{{ route('jadwal.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
+                            class="w-full sm:w-auto text-center bg-white text-gray-700 border border-[#E5E7EB] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#F8FAFC] transition-all duration-300">
 
                             Batal
 
@@ -98,8 +102,9 @@
 
                         <button
                             type="submit"
-                            class="bg-yellow-500 hover:bg-yellow-600 text-white w-full sm:w-auto px-5 py-3 rounded-lg transition">
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-amber-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:bg-amber-600 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
 
+                            <x-heroicon-o-pencil-square class="w-5 h-5" />
                             Update Jadwal
 
                         </button>

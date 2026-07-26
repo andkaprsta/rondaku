@@ -2,7 +2,7 @@
 
     <x-slot name="header">
 
-        <h2 class="text-2xl font-bold text-gray-800">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">
 
             Tambah User
 
@@ -10,17 +10,19 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
 
                 @if ($errors->any())
 
-                <div class="mb-5 bg-red-100 border border-red-300 text-red-700 rounded-lg p-4">
+                <div class="mb-6 flex items-start gap-2 rounded-xl bg-rose-50 border border-rose-100 text-rose-700 px-5 py-4 text-sm">
 
-                    <ul class="list-disc ml-5">
+                    <x-heroicon-o-exclamation-triangle class="w-5 h-5 shrink-0 mt-0.5" />
+
+                    <ul class="list-disc ml-4 space-y-0.5">
 
                         @foreach ($errors->all() as $error)
 
@@ -34,13 +36,13 @@
 
                 @endif
 
-                <form action="{{ route('user.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST" class="space-y-6">
 
                     @csrf
 
-                    <div class="mb-5">
+                    <div>
 
-                        <label class="block mb-2 font-semibold">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Nama
 
@@ -50,14 +52,16 @@
                             type="text"
                             name="name"
                             value="{{ old('name') }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200"
                             required>
 
                     </div>
 
-                    <div class="mb-5">
+                    <div>
 
-                        <label class="block mb-2 font-semibold">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Email
 
@@ -67,14 +71,16 @@
                             type="email"
                             name="email"
                             value="{{ old('email') }}"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200"
                             required>
 
                     </div>
 
-                    <div class="mb-5">
+                    <div>
 
-                        <label class="block mb-2 font-semibold">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Role
 
@@ -82,7 +88,9 @@
 
                         <select
                             name="role"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200"
                             required>
 
                             <option value="">-- Pilih Role --</option>
@@ -95,9 +103,9 @@
 
                     </div>
 
-                    <div class="mb-6">
+                    <div>
 
-                        <label class="block mb-2 font-semibold">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
 
                             Password
 
@@ -106,26 +114,30 @@
                         <input
                             type="password"
                             name="password"
-                            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            class="w-full rounded-lg border border-[#E5E7EB] px-4 py-2.5 text-sm text-gray-900
+                                   focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30 focus:border-[#2563EB]
+                                   transition-colors duration-200"
                             required>
 
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-3">
-
-                        <button
-                            class="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-6 py-3 rounded-lg">
-
-                            Simpan
-
-                        </button>
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-2">
 
                         <a href="{{ route('user.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white w-full sm:w-auto px-6 py-3 rounded-lg">
+                            class="w-full sm:w-auto text-center bg-white text-gray-700 border border-[#E5E7EB] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#F8FAFC] transition-all duration-300">
 
                             Kembali
 
                         </a>
+
+                        <button
+                            type="submit"
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#2563EB] text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:bg-[#1D4ED8] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+
+                            <x-heroicon-o-check class="w-5 h-5" />
+                            Simpan
+
+                        </button>
 
                     </div>
 
