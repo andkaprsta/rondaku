@@ -2,7 +2,7 @@
 
     <x-slot name="header">
 
-        <h2 class="text-2xl font-bold text-gray-800">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">
 
             Absensi Petugas
 
@@ -10,14 +10,16 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
             {{-- Alert --}}
             @if(session('success'))
 
-            <div class="mb-5 rounded-lg bg-green-100 border border-green-300 text-green-700 p-4">
+            <div class="mb-5 flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 px-5 py-4 text-sm font-medium">
+
+                <x-heroicon-o-check-circle class="w-5 h-5 shrink-0" />
 
                 {{ session('success') }}
 
@@ -27,7 +29,9 @@
 
             @if(session('error'))
 
-            <div class="mb-5 rounded-lg bg-red-100 border border-red-300 text-red-700 p-4">
+            <div class="mb-5 flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-100 text-rose-700 px-5 py-4 text-sm font-medium">
+
+                <x-heroicon-o-exclamation-triangle class="w-5 h-5 shrink-0" />
 
                 {{ session('error') }}
 
@@ -35,29 +39,32 @@
 
             @endif
 
-            <div class="bg-white rounded-xl shadow-lg p-5 md:p-8">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm p-6 sm:p-8">
 
                 @if($jadwal)
 
                 <div class="mb-6">
 
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4">
+                    <div class="flex items-center gap-2 mb-5">
+                        <x-heroicon-o-calendar-days class="w-5 h-5 text-[#2563EB]" />
+                        <h3 class="text-lg font-bold text-gray-900">
 
-                        Jadwal Hari Ini
+                            Jadwal Hari Ini
 
-                    </h3>
+                        </h3>
+                    </div>
 
                     <div class="space-y-3">
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2 border-b pb-2">
+                        <div class="flex items-center justify-between gap-3 rounded-lg bg-[#F8FAFC] px-4 py-3">
 
-                            <span class="text-gray-500">
+                            <span class="text-sm text-[#6B7280]">
 
                                 Tanggal
 
                             </span>
 
-                            <span class="font-semibold">
+                            <span class="text-sm font-semibold text-gray-900">
 
                                 {{ \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('d F Y') }}
 
@@ -65,15 +72,15 @@
 
                         </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2 border-b pb-2">
+                        <div class="flex items-center justify-between gap-3 rounded-lg bg-[#F8FAFC] px-4 py-3">
 
-                            <span class="text-gray-500">
+                            <span class="text-sm text-[#6B7280]">
 
                                 Petugas
 
                             </span>
 
-                            <span class="font-semibold">
+                            <span class="text-sm font-semibold text-gray-900">
 
                                 {{ Auth::user()->name }}
 
@@ -81,9 +88,9 @@
 
                         </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
+                        <div class="flex items-center justify-between gap-3 rounded-lg bg-[#F8FAFC] px-4 py-3">
 
-                            <span class="text-gray-500">
+                            <span class="text-sm text-[#6B7280]">
 
                                 Status
 
@@ -91,7 +98,7 @@
 
                             @if($sudahAbsen)
 
-                            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
+                            <span class="inline-flex items-center bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
 
                                 Sudah Absen
 
@@ -99,7 +106,7 @@
 
                             @else
 
-                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
+                            <span class="inline-flex items-center bg-rose-50 text-rose-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
 
                                 Belum Absen
 
@@ -123,9 +130,10 @@
 
                         <button
                             type="submit"
-                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+                            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-3 rounded-lg text-sm font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
 
-                            ✔ Absen Sekarang
+                            <x-heroicon-o-check class="w-5 h-5" />
+                            Absen Sekarang
 
                         </button>
 
@@ -135,9 +143,10 @@
 
                     <button
                         disabled
-                        class="w-full sm:w-auto bg-green-600 text-white px-8 py-3 rounded-lg cursor-not-allowed">
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-lg text-sm font-semibold cursor-not-allowed opacity-90">
 
-                        ✔ Anda Sudah Absen Hari Ini
+                        <x-heroicon-o-check-circle class="w-5 h-5" />
+                        Anda Sudah Absen Hari Ini
 
                     </button>
 
@@ -149,19 +158,21 @@
 
                 <div class="text-center py-10">
 
-                    <div class="text-5xl mb-4">
+                    <div class="flex justify-center mb-4">
 
-                        📅
+                        <div class="w-16 h-16 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center">
+                            <x-heroicon-o-calendar-days class="w-8 h-8" />
+                        </div>
 
                     </div>
 
-                    <h3 class="text-xl font-bold text-gray-700">
+                    <h3 class="text-lg font-bold text-gray-900">
 
                         Tidak Ada Jadwal Hari Ini
 
                     </h3>
 
-                    <p class="text-gray-500 mt-2">
+                    <p class="text-sm text-[#6B7280] mt-2">
 
                         Anda tidak memiliki jadwal ronda hari ini.
 

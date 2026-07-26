@@ -6,13 +6,13 @@
 
             <div>
 
-                <h2 class="text-2xl font-bold text-gray-800">
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">
 
                     Riwayat Absensi
 
                 </h2>
 
-                <p class="text-gray-500 mt-1">
+                <p class="text-sm text-[#6B7280] mt-1">
 
                     Riwayat absensi yang pernah Anda lakukan.
 
@@ -24,13 +24,15 @@
 
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-6">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if(session('success'))
 
-            <div class="mb-5 bg-green-100 border border-green-300 text-green-700 rounded-lg px-5 py-4">
+            <div class="mb-5 flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 px-5 py-4 text-sm font-medium">
+
+                <x-heroicon-o-check-circle class="w-5 h-5 shrink-0" />
 
                 {{ session('success') }}
 
@@ -38,26 +40,24 @@
 
             @endif
 
-            <div class="bg-white rounded-xl shadow-lg">
+            <div class="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm">
 
-                <div class="p-5 md:p-6 border-b">
+                <div class="p-5 sm:p-6 border-b border-[#E5E7EB]">
 
-                    <h3 class="text-lg font-bold text-gray-700">
+                    <h3 class="text-lg font-bold text-gray-900">
 
                         Daftar Riwayat Absensi
 
                     </h3>
 
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-[#6B7280] mt-1">
 
                         Total :
-
-                        <span class="font-bold text-blue-600">
+                        <span class="font-bold text-[#2563EB]">
 
                             {{ $riwayat->total() }}
 
                         </span>
-
                         Data
 
                     </p>
@@ -66,25 +66,25 @@
 
                 <div class="overflow-x-auto">
 
-                    <table class="min-w-full text-sm md:text-base">
+                    <table class="min-w-full w-max sm:w-full text-sm">
 
-                        <thead class="bg-gray-100">
+                        <thead class="bg-[#F8FAFC] sticky top-0">
 
-                            <tr>
+                            <tr class="border-b border-[#E5E7EB]">
 
-                                <th class="px-4 md:px-6 py-3 md:py-4 text-left">
+                                <th class="px-4 sm:px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     No
 
                                 </th>
 
-                                <th class="px-4 md:px-6 py-3 md:py-4 text-left">
+                                <th class="px-4 sm:px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     Tanggal
 
                                 </th>
 
-                                <th class="px-4 md:px-6 py-3 md:py-4 text-center">
+                                <th class="px-4 sm:px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-[#6B7280] whitespace-nowrap">
 
                                     Status
 
@@ -94,29 +94,29 @@
 
                         </thead>
 
-                        <tbody>
+                        <tbody class="divide-y divide-[#E5E7EB]">
 
                             @forelse($riwayat as $item)
 
-                            <tr class="border-b hover:bg-gray-50">
+                            <tr class="odd:bg-white even:bg-[#F8FAFC] hover:bg-blue-50/60 transition-colors duration-200">
 
-                                <td class="px-4 md:px-6 py-3 md:py-4">
+                                <td class="px-4 sm:px-6 py-4 text-gray-600 whitespace-nowrap">
 
                                     {{ $riwayat->firstItem() + $loop->index }}
 
                                 </td>
 
-                                <td class="px-4 md:px-6 py-3 md:py-4">
+                                <td class="px-4 sm:px-6 py-4 text-gray-600 whitespace-nowrap">
 
                                     {{ \Carbon\Carbon::parse($item->jadwal->tanggal)->translatedFormat('d F Y') }}
 
                                 </td>
 
-                                <td class="px-4 md:px-6 py-3 md:py-4 text-center">
+                                <td class="px-4 sm:px-6 py-4 text-center whitespace-nowrap">
 
                                     @if($item->status == 'hadir')
 
-                                    <span class="inline-flex px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
+                                    <span class="inline-flex items-center bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
 
                                         Hadir
 
@@ -124,7 +124,7 @@
 
                                     @else
 
-                                    <span class="inline-flex px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-semibold">
+                                    <span class="inline-flex items-center bg-rose-50 text-rose-700 px-3.5 py-1.5 rounded-full text-xs font-semibold">
 
                                         Tidak Hadir
 
@@ -140,7 +140,7 @@
 
                             <tr>
 
-                                <td colspan="3" class="text-center py-10 text-gray-500">
+                                <td colspan="3" class="text-center py-10 text-[#6B7280]">
 
                                     Belum ada riwayat absensi.
 
@@ -158,7 +158,7 @@
 
                 @if($riwayat->hasPages())
 
-                <div class="p-5">
+                <div class="p-5 overflow-x-auto">
 
                     {{ $riwayat->links() }}
 
