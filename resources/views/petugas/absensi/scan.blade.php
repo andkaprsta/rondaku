@@ -47,12 +47,7 @@
             document.getElementById("scan-result").innerHTML =
                 "<span class='text-green-600 font-semibold'>QR berhasil dipindai, mengalihkan...</span>";
 
-            html5QrcodeScanner.clear();
-
-            setTimeout(() => {
-                window.location.href = decodedText;
-            }, 500);
-
+            window.location.href = decodedText;
         }
 
         function onScanFailure(error) {}

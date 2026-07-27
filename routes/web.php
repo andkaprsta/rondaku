@@ -109,6 +109,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/setting/qr', [App\Http\Controllers\Admin\SettingController::class, 'qr'])
         ->name('setting.qr');
+
+    Route::get('/setting/qr/print', [SettingController::class, 'printQr'])
+        ->name('setting.qr.print');
+
+    Route::get('/setting/qr/download', [SettingController::class, 'downloadQr'])
+        ->name('setting.qr.download');
 });
 
 /*

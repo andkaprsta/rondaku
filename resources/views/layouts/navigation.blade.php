@@ -96,6 +96,8 @@
                     <span class="whitespace-nowrap" x-show="!collapsed" x-transition>Rekap Absensi</span>
                 </a>
 
+
+
             </div>
         </div>
 
