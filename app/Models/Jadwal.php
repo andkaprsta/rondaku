@@ -9,8 +9,9 @@ class Jadwal extends Model
     protected $table = 'jadwal';
 
     protected $fillable = [
+        'petugas_id',
         'tanggal',
-        'petugas_id'
+        'qr_token',
     ];
 
     public function petugas()

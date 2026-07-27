@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\User;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class JadwalController extends Controller
 {
@@ -43,9 +44,14 @@ class JadwalController extends Controller
     }
     public function store(Request $request)
     {
+        $request->validate([
+            'petugas_id' => 'required|exists:users,id',
+            'tanggal' => 'required|date',
+        ]);
+
         $jadwal = Jadwal::create([
-            'tanggal' => $request->tanggal,
             'petugas_id' => $request->petugas_id,
+            'tanggal' => $request->tanggal,
         ]);
 
         Absensi::create([
@@ -142,4 +148,5 @@ class JadwalController extends Controller
             'message' => 'Jadwal berhasil dihapus.'
         ]);
     }
+    
 }

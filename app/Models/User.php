@@ -9,14 +9,16 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
     protected $fillable = [
         'warga_id',
         'name',
         'email',
         'password',
         'role',
-        'photo'
+        'photo',
     ];
+
     protected $hidden = [
         'password',
         'remember_token'
@@ -30,8 +32,6 @@ class User extends Authenticatable
         ];
     }
 
-    // Relasi ke tabel warga
-   
     // Relasi ke tabel jadwal
     public function jadwals()
     {

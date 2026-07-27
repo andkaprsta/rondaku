@@ -28,6 +28,7 @@ class UserController extends Controller
 
     public function create()
     {
+        
         return view('admin.user.create');
     }
 
@@ -43,8 +44,9 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => 'petugas',
+
         ]);
 
         return redirect()
@@ -91,4 +93,6 @@ class UserController extends Controller
             ->route('user.index')
             ->with('success', 'User berhasil dihapus.');
     }
+
+
 }

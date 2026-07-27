@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\AbsensiController as AdminAbsensiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\SettingController;
 
 // Petugas
 use App\Http\Controllers\Petugas\AbsensiController as PetugasAbsensiController;
@@ -99,6 +100,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::delete('/admin/kalender/event/{id}', [JadwalController::class, 'destroyEvent'])
         ->name('jadwal.event.destroy');
+
+    Route::get('/admin/setting/qr', [SettingController::class, 'qr'])
+        ->name('setting.qr');
+
+    Route::get('/setting', [App\Http\Controllers\Admin\SettingController::class, 'index'])
+        ->name('setting.index');
+
+    Route::get('/setting/qr', [App\Http\Controllers\Admin\SettingController::class, 'qr'])
+        ->name('setting.qr');
 });
 
 /*
@@ -119,6 +129,12 @@ Route::middleware(['auth', 'petugas'])->group(function () {
         
     Route::get('/riwayat-absensi', [App\Http\Controllers\Petugas\RiwayatAbsensiController::class, 'index'])
         ->name('petugas.riwayat');
+
+    Route::get('/petugas/absensi/qr/{token}', [PetugasAbsensiController::class, 'scanQr'])
+        ->name('petugas.absensi.qr');
+
+    Route::get('/petugas/scan-qr', [App\Http\Controllers\Petugas\AbsensiController::class, 'scan'])
+        ->name('absensi.scan');
 });
 
 require __DIR__ . '/auth.php';

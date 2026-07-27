@@ -314,9 +314,9 @@
             <div class="text-center mb-16" data-aos="fade-up">
                 <span class="text-xs font-semibold tracking-wider uppercase text-[#2563EB]">Terjadwal Otomatis</span>
                 <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-[#0F172A]">
-                    Jadwal Ronda Minggu Ini
+                    Jadwal Ronda Tetap
                 </h2>
-                <p class="mt-3 text-[#64748B]">Petugas yang bertugas menjaga lingkungan Anda.</p>
+                <p class="mt-3 text-[#64748B]">Jadwal petugas ronda yang berlaku setiap minggu.</p>
             </div>
 
             <div class="relative">
@@ -326,7 +326,7 @@
 
                 <div class="space-y-5">
 
-                    @forelse($jadwalMinggu as $tanggal => $jadwals)
+                    @forelse($jadwalMinggu as $hari => $jadwals)
 
                     <div data-aos="fade-up" class="relative flex flex-col sm:flex-row gap-5 sm:items-center bg-white border border-[#E2E8F0] rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
 
@@ -336,10 +336,22 @@
 
                         <div class="sm:w-44 shrink-0">
                             <p class="text-base font-bold text-[#0F172A]">
-                                {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l') }}
+                                @php
+                                $hariIndonesia = [
+                                'Monday' => 'Senin',
+                                'Tuesday' => 'Selasa',
+                                'Wednesday' => 'Rabu',
+                                'Thursday' => 'Kamis',
+                                'Friday' => 'Jumat',
+                                'Saturday' => 'Sabtu',
+                                'Sunday' => 'Minggu',
+                                ];
+                                @endphp
+
+                                {{ $hariIndonesia[$hari] }}
                             </p>
                             <p class="text-sm text-[#64748B]">
-                                {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                Jadwal Ronda Tetap
                             </p>
                         </div>
 

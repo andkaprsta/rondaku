@@ -7,6 +7,7 @@ use App\Models\Absensi;
 use App\Models\Jadwal;
 use App\Models\User;
 use App\Models\ActivityLog;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,6 +97,77 @@ class AbsensiController extends Controller
             'aktivitas' => 'Melakukan absensi'
         ]);
 
-        return back()->with('success', 'Absensi berhasil dilakukan.');
+        return redirect()
+            ->route('absensi.index')
+            ->with('success', 'Absensi berhasil dilakukan.');
+
+        
+    }
+
+    
+
+    public function scan()
+    {
+        return view('petugas.absensi.scan');
+    }
+
+    public function scanQr($token)
+    {
+        $setting = Setting::first();
+
+        if (!$setting || $setting->qr_token !== $token) {
+            return redirect()
+                ->route('absensi.index')
+                ->with('error', 'QR Code tidak valid.');
+        }
+
+        $now = Carbon::now('Asia/Jakarta');
+
+        if ($now->hour >= 22) {
+            $tanggalRonda = $now->toDateString();
+        } elseif ($now->hour < 4) {
+            $tanggalRonda = $now->copy()->subDay()->toDateString();
+        } else {
+            return redirect()
+                ->route('absensi.index')
+                ->with('error', 'Absensi hanya dapat dilakukan pukul 22.00 - 04.00 WIB.');
+        }
+
+        $jadwal = Jadwal::where('petugas_id', auth()->id())
+            ->whereDate('tanggal', $tanggalRonda)
+            ->first();
+
+        if (!$jadwal) {
+            return redirect()
+                ->route('absensi.index')
+                ->with('error', 'Anda tidak memiliki jadwal ronda.');
+        }
+
+        $absensi = Absensi::where('jadwal_id', $jadwal->id)->first();
+
+        if (!$absensi) {
+            return redirect()
+                ->route('absensi.index')
+                ->with('error', 'Data absensi tidak ditemukan.');
+        }
+
+        if ($absensi->status == 'hadir') {
+            return redirect()
+                ->route('absensi.index')
+                ->with('error', 'Anda sudah melakukan absensi.');
+        }
+
+        $absensi->update([
+            'status' => 'hadir'
+        ]);
+
+        ActivityLog::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Melakukan absensi melalui QR'
+        ]);
+
+        return redirect()
+            ->route('absensi.index')
+            ->with('success', 'Absensi berhasil dilakukan.');
     }
 }
