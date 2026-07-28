@@ -118,7 +118,7 @@
 
     {{-- Script tambahan dari setiap halaman --}}
     @stack('scripts')
-
+    <x-toast />
 </body>
 
 </html>
