@@ -31,6 +31,31 @@ class DashboardController extends Controller
         $absensiHariIni = Absensi::whereDate('created_at', today())->count();
 
         // =========================
+        // Statistik Absensi Hari Ini
+        // =========================
+
+        $now = Carbon::now('Asia/Jakarta');
+
+        $tanggalRonda = $now->hour < 4
+            ? $now->copy()->subDay()->toDateString()
+            : $now->toDateString();
+
+        $jadwalIds = Jadwal::whereDate('tanggal', $tanggalRonda)
+            ->pluck('id');
+
+        $totalPetugasHariIni = $jadwalIds->count();
+
+        $totalHadirHariIni = Absensi::whereIn('jadwal_id', $jadwalIds)
+            ->where('status', 'hadir')
+            ->count();
+
+        $totalBelumHadir = $totalPetugasHariIni - $totalHadirHariIni;
+
+        $persentaseHadir = $totalPetugasHariIni > 0
+            ? round(($totalHadirHariIni / $totalPetugasHariIni) * 100)
+            : 0;
+
+        // =========================
         // Grafik 7 Hari Terakhir
         // =========================
 
@@ -109,6 +134,17 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        // =========================
+        // Petugas Belum Hadir Hari Ini
+        // =========================
+
+        $belumHadir = Jadwal::with('petugas')
+            ->whereDate('tanggal', $tanggalRonda)
+            ->whereDoesntHave('absensis', function ($query) {
+                $query->where('status', 'hadir');
+            })
+            ->get();
+
         return view('admin.dashboard', compact(
 
             'jumlahWarga',
@@ -131,7 +167,60 @@ class DashboardController extends Controller
             'jadwalBesok',
             'hadirHariIni',
             'belumAbsenHariIni',
-            'topPetugas'
+            'topPetugas',
+            'totalPetugasHariIni',
+            'totalHadirHariIni',
+            'totalBelumHadir',
+            'persentaseHadir',
+            'belumHadir',
+
         ));
+
+        
+    }
+
+    public function dashboardData()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+
+        $tanggalRonda = $now->hour < 4
+            ? $now->copy()->subDay()->toDateString()
+            : $now->toDateString();
+
+        $jadwalIds = Jadwal::whereDate('tanggal', $tanggalRonda)
+            ->pluck('id');
+
+        $totalPetugasHariIni = $jadwalIds->count();
+
+        $totalHadirHariIni = Absensi::whereIn('jadwal_id', $jadwalIds)
+            ->where('status', 'hadir')
+            ->count();
+
+        $totalBelumHadir = $totalPetugasHariIni - $totalHadirHariIni;
+
+        $persentaseHadir = $totalPetugasHariIni > 0
+            ? round(($totalHadirHariIni / $totalPetugasHariIni) * 100)
+            : 0;
+
+        $activities = ActivityLog::with('user')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        $belumHadir = Jadwal::with('petugas')
+            ->whereDate('tanggal', $tanggalRonda)
+            ->whereDoesntHave('absensis', function ($q) {
+                $q->where('status', 'hadir');
+            })
+            ->get();
+
+        return response()->json([
+            'petugas' => $totalPetugasHariIni,
+            'hadir' => $totalHadirHariIni,
+            'belum' => $totalBelumHadir,
+            'persentase' => $persentaseHadir,
+            'activities' => $activities,
+            'belumHadir' => $belumHadir,
+        ]);
     }
 }

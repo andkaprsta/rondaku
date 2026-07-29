@@ -115,6 +115,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/setting/qr/download', [SettingController::class, 'downloadQr'])
         ->name('setting.qr.download');
+
+    Route::get('/admin/dashboard/data', [AdminDashboardController::class, 'dashboardData'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.dashboard.data');
 });
 
 /*
