@@ -108,7 +108,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('setting.index');
 
     Route::get('/setting/qr', [App\Http\Controllers\Admin\SettingController::class, 'qr'])
-        ->name('setting.qr');
+        ->name('setting.qr.update');
 
     Route::get('/setting/qr/print', [SettingController::class, 'printQr'])
         ->name('setting.qr.print');
