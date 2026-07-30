@@ -3,16 +3,17 @@ FROM php:8.3-fpm
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
+    curl \
     unzip \
     zip \
-    curl \
+    nodejs \
+    npm \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     libzip-dev \
     libonig-dev \
-    nodejs \
-    npm
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP Extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
@@ -26,28 +27,44 @@ RUN docker-php-ext-install \
     exif
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www
 
+# Copy project
 COPY . .
 
+# Create Laravel folders
+RUN mkdir -p \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/testing \
+    bootstrap/cache
+
+# Permissions
+RUN chmod -R 775 storage bootstrap/cache
+
+# Install PHP dependencies
 RUN composer install \
     --no-dev \
     --prefer-dist \
     --optimize-autoloader \
     --no-interaction
 
+# Install Node dependencies
 RUN npm install
-RUN npm run build
 
-RUN chmod -R 775 storage bootstrap/cache
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
+# Build Vite
+RUN npm run build
 
 EXPOSE 8000
 
-EXPOSE 8080
-
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT
+CMD php artisan key:generate --force && \
+    php artisan migrate --force && \
+    php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan view:clear && \
+    php artisan route:clear && \
+    php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
