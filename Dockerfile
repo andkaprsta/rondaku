@@ -61,7 +61,6 @@ RUN npm run build
 EXPOSE 8000
 
 CMD sh -c "php artisan config:clear && \
-php artisan cache:clear && \
 php artisan view:clear && \
 php artisan route:clear && \
 php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
