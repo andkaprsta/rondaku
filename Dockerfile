@@ -34,6 +34,9 @@ RUN npm run build
 EXPOSE 8000
 
 CMD sh -c "\
+echo '=== STARTING ===' && \
 php artisan optimize:clear && \
+echo '=== RUN MIGRATE ===' && \
 php artisan migrate --force && \
+echo '=== START SERVER ===' && \
 php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
