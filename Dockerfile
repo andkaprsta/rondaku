@@ -29,7 +29,12 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 
 ARG CACHE_BUST=1
+RUN echo "Cache bust: ${CACHE_BUST}"
+
 RUN npm install
+
+RUN rm -rf public/build
+
 RUN npm run build
 
 EXPOSE 8000
