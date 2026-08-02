@@ -9,9 +9,19 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CkZQWUsr.js",
+    "file": "assets/app-BsDyUI20.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/calendar.js",
+      "resources/js/calendar.js"
+    ]
+  },
+  "resources/js/calendar.js": {
+    "file": "assets/calendar-CF9ffmIE.js",
+    "name": "calendar",
+    "src": "resources/js/calendar.js",
     "isEntry": true
   }
 }
