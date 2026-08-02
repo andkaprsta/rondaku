@@ -28,6 +28,7 @@ RUN chmod -R 775 storage bootstrap/cache
 
 RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 
+ARG CACHE_BUST=1
 RUN npm install
 RUN npm run build
 
