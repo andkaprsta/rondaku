@@ -22,7 +22,6 @@ WORKDIR /var/www
 
 COPY . .
 
-# Buat folder Laravel sebelum composer install
 RUN mkdir -p \
     storage/framework/cache/data \
     storage/framework/sessions \
@@ -32,22 +31,18 @@ RUN mkdir -p \
 
 RUN chmod -R 775 storage bootstrap/cache
 
-# Install PHP dependencies
 RUN composer install \
     --no-dev \
     --prefer-dist \
     --optimize-autoloader \
     --no-interaction
 
-# Install JS dependencies
 RUN npm install
 
-# Build Vite
 RUN rm -rf public/build
-RUN npm run build
 
-EXPOSE 8000
+RUN npm run build
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "echo '=== STARTING ===' && php artisan optimize:clear && echo '=== RUN MIGRATE ===' && php artisan migrate --force && echo '=== START SERVER ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "php artisan optimize:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
