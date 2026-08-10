@@ -22,27 +22,30 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN mkdir -p storage/framework/{cache/data,sessions,views,testing} bootstrap/cache
+# Buat folder Laravel sebelum composer install
+RUN mkdir -p \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/testing \
+    bootstrap/cache
 
 RUN chmod -R 775 storage bootstrap/cache
 
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
+# Install PHP dependencies
+RUN composer install \
+    --no-dev \
+    --prefer-dist \
+    --optimize-autoloader \
+    --no-interaction
 
-ARG CACHE_BUST=1
-RUN echo "Cache bust: ${CACHE_BUST}"
-
+# Install JS dependencies
 RUN npm install
 
+# Build Vite
 RUN rm -rf public/build
-
 RUN npm run build
 
 EXPOSE 8000
 
-CMD sh -c "\
-echo '=== STARTING ===' && \
-php artisan optimize:clear && \
-echo '=== RUN MIGRATE ===' && \
-php artisan migrate --force && \
-echo '=== START SERVER ===' && \
-php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
+CMD ["sh", "-c", "echo '=== STARTING ===' && php artisan optimize:clear && echo '=== RUN MIGRATE ===' && php artisan migrate --force && echo '=== START SERVER ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
