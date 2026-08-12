@@ -44,4 +44,6 @@ RUN rm -rf public/build
 RUN npm run build
 
 EXPOSE 8080
-CMD ["sh", "-c", "echo '=== START ==='; echo PORT=$PORT; php artisan serve --host=0.0.0.0 --port=${PORT}"]
+EXPOSE 8080
+
+CMD ["sh", "-c", "echo '=== START ==='; echo PORT=$PORT; php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
